@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Knowledge Building Integrated Throughout Instruction</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<!-- Design system: fonts + tokens from Direction 1 -->
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/maxlit-knowledge-path.css">
+</head>
+<body>
+
+<main>
+<section class="a-band" id="s07-alignment" aria-labelledby="alignTitle">
+  <div class="a-shell">
+    <div class="a-head">
+      <h1 class="a-h2" id="alignTitle">Knowledge Building Integrated Throughout Instruction</h1>
+      <p class="a-sub">Knowledge Paths That Build Cumulatively Across Grades</p>
+      <p class="a-lede">Unit topics align with California grade-level content standards and are consistent at every grade, with prior knowledge from one grade directly supporting new knowledge building in subsequent grades.</p>
+    </div>
+
+    <div class="tool">
+      <div class="tool__bar">
+        <div class="seg" role="tablist" aria-label="Choose a view">
+          <button role="tab" id="tab-grid" aria-controls="view-grid" aria-selected="true" tabindex="0" data-view="grid"><i class="fa-solid fa-table-cells"></i>Unit topics by grade</button>
+          <button role="tab" id="tab-path" aria-controls="view-path" aria-selected="false" tabindex="-1" data-view="path">Knowledge path</button>
+        </div>
+        <div class="chips" id="gradeChips" role="group" aria-label="Filter by grade"><span class="chips__lab">Grade</span></div>
+      </div>
+
+      <!-- VIEW 1 -->
+      <div class="view is-on" id="view-grid" role="tabpanel" aria-labelledby="tab-grid">
+        <div class="grid-wrap"><div class="agrid" id="agrid" role="group" aria-label="Unit topics by grade and unit"></div></div>
+        <div class="mlist" id="mlist" role="list" aria-label="Units for the selected grade"></div>
+        <div class="detail" id="detail" aria-live="polite"></div>
+      </div>
+
+      <!-- VIEW 2 -->
+      <div class="view" id="view-path" role="tabpanel" aria-labelledby="tab-path">
+        <div class="path">
+          <div class="path__top">
+            <div class="path__title"><b>Unit 2 · The Living World</b></div>
+            <div class="path__ctrl">
+              <button class="icon-btn" id="pPrev" aria-label="Previous grade"><i class="fa-solid fa-chevron-left"></i></button>
+              <button class="icon-btn icon-btn--play" id="pPlay" aria-pressed="false"><i class="fa-solid fa-play"></i><span>Play</span></button>
+              <button class="icon-btn" id="pNext" aria-label="Next grade"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+          </div>
+          <div class="stairs" id="stairs" role="group" aria-label="Grades, from TK to 6"></div>
+          <div class="path__body">
+            <div class="stmt" id="stmt" aria-live="polite"></div>
+            <div class="eq" id="eq" aria-live="polite"></div>
+          </div>
+          <div class="path__foot">
+            <button class="back" data-view="grid"><i class="fa-solid fa-arrow-left"></i>Unit topics by grade</button>
+            <button type="button" class="vid" id="vidOpen" aria-haspopup="dialog"><span class="p"><i class="fa-solid fa-play"></i></span>Gina Cervetti video</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- Wistia video pop-up (native dialog: focus is trapped, Esc closes, focus returns to the button) -->
+<dialog class="vmodal" id="vmodal" aria-labelledby="vmodalTitle">
+  <div class="vmodal__head">
+    <h2 id="vmodalTitle">Gina Cervetti video</h2>
+    <button type="button" class="vmodal__close" id="vidClose" aria-label="Close video"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <div class="vmodal__frame">
+    <iframe id="vidFrame" title="Gina Cervetti video" data-src="https://fast.wistia.net/embed/iframe/n0hzg4rx1f?autoPlay=true&videoFoam=true"
+      allow="autoplay; fullscreen" allowfullscreen loading="lazy"></iframe>
+  </div>
+</dialog>
+<script src="js/maxlit-knowledge-path.js"></script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+/* MAXLit Knowledge Path — base: brand typeface, design tokens and reset.
+   Taken from direction-a-html/direciton-1/css/style.css (MAXLit design system). */
+
+
+/* ---------- brand typeface ----------
+   VAG Rounded for BEC, served locally. The family ships Regular / SemiBold /
+   Bold with italics but no Medium cut, so weight 500 maps to Regular — the
+   same mapping used on the Figma boards. */
+@font-face{
+  font-family:"VAG Rounded for BEC";
+  src:url("../fonts/VAGRoundedforBEC.otf") format("opentype");
+  font-weight:400;font-style:normal;font-display:swap;
+}
+@font-face{
+  font-family:"VAG Rounded for BEC";
+  src:url("../fonts/VAGRoundedforBEC-Italic.otf") format("opentype");
+  font-weight:400;font-style:italic;font-display:swap;
+}
+@font-face{
+  font-family:"VAG Rounded for BEC";
+  src:url("../fonts/VAGRoundedforBEC.otf") format("opentype");
+  font-weight:500;font-style:normal;font-display:swap;
+}
+@font-face{
+  font-family:"VAG Rounded for BEC";
+  src:url("../fonts/VAGRoundedforBEC-Italic.otf") format("opentype");
+  font-weight:500;font-style:italic;font-display:swap;
+}
+@font-face{
+  font-family:"VAG Rounded for BEC";
+  src:url("../fonts/VAGRoundedforBEC-SmBd.otf") format("opentype");
+  font-weight:600;font-style:normal;font-display:swap;
+}
+@font-face{
+  font-family:"VAG Rounded for BEC";
+  src:url("../fonts/VAGRoundedforBEC-SmBdItalic.otf") format("opentype");
+  font-weight:600;font-style:italic;font-display:swap;
+}
+@font-face{
+  font-family:"VAG Rounded for BEC";
+  src:url("../fonts/VAGRoundedforBEC-Bold.otf") format("opentype");
+  font-weight:700;font-style:normal;font-display:swap;
+}
+@font-face{
+  font-family:"VAG Rounded for BEC";
+  src:url("../fonts/VAGRoundedforBEC-BoldItalic.otf") format("opentype");
+  font-weight:700;font-style:italic;font-display:swap;
+}
+
+
+:root{
+  /* ---- brand ----
+     Names are the MAXLit Design System's own (Figma file ErDGdGVr5aQzWigTEKupZX,
+     "Style Guide" page). Every value below is a library value; where the library
+     ships no equivalent the comment says what it is derived from. */
+  --ink:#181B44;          /* G6 Blue */
+  --indigo:#28378E;       /* Max Lit Blue */
+  --orange:#F36E23;       /* MAX Orange */
+  --amber:#F3AA18;        /* Star Gradient, anchor stop */
+  --pink:#EB148C;         /* MAX Pink */
+  --purple:#8C4493;       /* MAX Purple */
+  --berry:#BD468C;        /* MAX Berry */
+  --purple-deep:#953495;  /* Reading strand */
+  --cyan:#14A9E0;         /* MAX Light Blue */
+  --cyan-deep:#057EAD;    /* Writing strand */
+  --green:#379B16;        /* Week 3 Green */
+  --teal:#15846E;         /* Phonics strand */
+
+  /* ---- bec chrome ----
+     Benchmark Education's own header/footer palette, deliberately left off the
+     MAXLit library — this furniture belongs to BEC's brand, not MAXLit's. */
+  --bec-blue:#00539B;     /* Benchmark Blue */
+  --bec-blue-deep:#003E62;
+  --bec-nav-blue:#2E4699;
+  --bec-charcoal:#404040;
+  --bec-signup:#EBF2FA;
+  --bec-copyright:#BFE1FF;
+
+  /* ---- text ----
+     The library defines no semantic text tokens, so the ramp is the Neutral
+     scale. Neutral 300 is the lightest grey in it that clears WCAG AA (4.5:1)
+     on white — Mid gray reaches only 3.69:1 and Neutral 200 only 2.70:1 — so
+     every token carrying real copy sits on Neutral 300 or darker. Hierarchy
+     among these is carried by size, weight and tracking, not by tint. */
+  --text-body:#686666;        /* Neutral 300  5.70:1 on white */
+  --text-muted:#686666;       /* Neutral 300 */
+  --text-subtle:#686666;      /* Neutral 300 - was Mid gray, 3.69:1, failed AA */
+  --text-faint:#686666;       /* Neutral 300 - was Neutral 200, 2.70:1, failed AA */
+  --text-dark:#333333;        /* Neutral 400  12.63:1 */
+  --text-link:#3F5CEE;        /* Links        5.28:1 */
+  --text-placeholder:#686666; /* Neutral 300 - was Neutral 200, 2.70:1, failed AA */
+
+  /* ---- surfaces ---- */
+  --white:#FFFFFF;        /* Neutral 000 */
+  --blue-50:#F0F7FF;      /* CMI5 UI Light */
+  --gray-50:#F0F4F9;      /* TRS Gray hover */
+  --stat-bar:#F4F4F4;     /* Neutral 100 */
+  --gray-active:#E0E3EB;  /* TRS Gray active */
+  --tint-indigo:#E9EBFA;  /* Max Lit Blue 050 */
+  --tint-purple:#F4ECF4;  /* derived: MAX Purple at 10% on white */
+  --tint-orange:#FDECE2;  /* derived: MAX Orange at 13% on white */
+
+  /* ---- lines ----
+     Neutral 150 covers both --line-btn and --line-stat: the library has only
+     three greys in this band and the two never meet on screen. */
+  --line:#E0E3EB;         /* TRS Gray active */
+  --line-soft:#E9EBFA;    /* Max Lit Blue 050 */
+  --line-input:#DEE2E6;   /* TRS Table border */
+  --line-btn:#D9D9D9;     /* Neutral 150 */
+  --line-btn-alt:#C2C7E4; /* Max Lit Blue 100 */
+  --line-stat:#D9D9D9;    /* Neutral 150 */
+
+  /* type */
+  --font:"VAG Rounded for BEC","Quicksand",ui-rounded,system-ui,-apple-system,"Segoe UI",sans-serif;
+
+  /* layout */
+  --gutter:80px;
+  --band:88px;
+}
+
+/* ---------- base ---------- */
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  font-family:var(--font);
+  font-size:16px;
+  line-height:1.6;
+  color:var(--text-body);
+  background:#E0E3EB;   /* TRS Gray active — the ground the page card sits on */
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;display:block;}
+a{color:var(--text-link);text-decoration:none;}
+a:hover{color:var(--indigo);}
+:focus-visible{outline:3px solid var(--orange);outline-offset:3px;}
+
+h1,h2,h3,h4,h5{margin:0;color:var(--ink);font-weight:600;letter-spacing:-.03em;line-height:1.05;text-wrap:balance;}
+p{margin:0;}
+ul{margin:0;padding:0;list-style:none;}
