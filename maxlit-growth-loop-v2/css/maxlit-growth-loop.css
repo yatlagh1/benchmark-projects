@@ -1,0 +1,562 @@
+/* ──────────────────────────────────────────────────────────────────────────
+   A360 × MAXLit growth loop  (v2)
+
+   Styled to sit on the MAXLiteracy California landing page: type scale,
+   blue, lines, tint, cards and buttons are taken from maxlit-final/css/final.css
+   (.h2 .sub .lede .eyebrow .btn .btn-ghost .linkline), and the .seg toggle and
+   the tool bar match the knowledge-path tool on the same page.
+
+   Rule carried over from final.css: nothing that does nothing gets a pill,
+   a border-and-fill or a hover - those read as buttons.
+
+   What v2 changes (before / after screenshots are in _review/):
+   - the ring is kept from 640px up; circles and labels size from the ring
+     (container units), so tablets keep the loop and long names stay inside
+   - the toggle and its key sit in a bar above the loop, not in the ring
+   - side by side, the panel is as tall as the ring column (compact, as in
+     v1) with Previous / Next pinned in view; only its content scrolls, with a
+     visible scrollbar. Every step is listed, grouped by role, with the product
+     area under the title and a thumbnail of its screen
+   - phones get a vertical loop (a spine through the stage badges) instead of
+     boxed accordion bars
+   - the screenshot viewer fits the screen, runs across stages and has a strip
+   ────────────────────────────────────────────────────────────────────────── */
+
+:root{
+  /* landing-page values (css/final.css) */
+  --gl-blue:#00539B; --gl-blue-hover:#003F78; --gl-ink:#222; --gl-text:#333; --gl-body:#686666;
+  --gl-line:#E0E3EB; --gl-line-strong:#B9B9B9; --gl-tint:#F4F7FB; --gl-radius:16px;
+  --gl-focus:#28378E;                      /* Max Lit Blue: every focus ring */
+  --gl-ghost-line:#858B97;                 /* outline-button border, 3.5:1 */
+  --gl-t23:#8C4493;
+  --gl-dash:#8C93A0;                       /* dashed "Tier 2 & 3" mark, 3.1:1 */
+  --gl-seg:#F0F4F9;                        /* toggle ground, quiet hover fills */
+  --gl-name-out:#4F5562;                   /* names on set-back stages, 7.6:1 */
+  --gl-spine:#C9D2E0;                      /* phone list spine (decorative) */
+  --gl-glyph:#9AA3B2;                      /* image glyph behind thumbnails */
+  --gl-scroll:#AEB6C3;                     /* panel scrollbar thumb */                        /* MAX Purple: Tier 2 & 3 marks */
+  --gl-arc:#7F93B3;                        /* ring arcs, 3.1:1 on white (was #9FB0C8, 2.2:1) */
+  --gl-out:#767676;                        /* lightest grey that passes AA on white */
+  --gl-ease:cubic-bezier(.23,1,.32,1);     /* strong ease-out: every entrance and state change */
+}
+
+body{ background:#fff; color:var(--gl-ink); }
+/* no widow words: headings balance their lines, running text avoids a lone
+   last word (the JS also glues the last two words with a no-break space) */
+h1,h2,h3,.a-h2,.a-sub,.d-name,.node__name{ text-wrap:balance; }
+p,li,.step__t,.branch__if,.branch__then{ text-wrap:pretty; }
+button{ font-family:var(--font); touch-action:manipulation; -webkit-tap-highlight-color:transparent; }
+::selection{ background:#CFE0F1; color:var(--gl-ink); }
+.sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden;
+  clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+
+/* ---------- section head (final.css .band .head) ---------- */
+.a-band{ padding:60px 0; background:#fff; }
+.a-shell{ max-width:1440px; margin:0 auto; padding:0 80px; }
+.a-head{ max-width:767px; }
+/* Decorative doodle motif to the right of the head - the landing page's
+   .band--bird image, size and opacity (final.css). Shown whole, scaled down
+   with the row, never behind the tool card. */
+.a-top{ display:grid; grid-template-columns:minmax(540px,767fr) minmax(0,480fr); column-gap:32px; align-items:start; }
+.a-motif{ width:100%; max-width:480px; aspect-ratio:982/547; justify-self:end; margin-top:-44px;
+  background:url("../assets/motif02.png") no-repeat center/contain; opacity:.085; }
+.a-h2{ font-size:44px; line-height:1.06; letter-spacing:-.01em; font-weight:600; color:var(--gl-ink); margin:0; }
+.a-sub{ font-size:22px; line-height:1.3; letter-spacing:-.01em; font-weight:600; color:var(--gl-blue); margin:16px 0 0; }
+.a-lede{ font-size:18px; line-height:1.65; font-weight:500; color:var(--gl-body); margin:20px 0 0; }
+
+/* ---------- tool card ---------- */
+/* no overflow:hidden on .tool - it would turn the card into the scroll
+   container and stop the ring from staying in view */
+.tool{ margin-top:40px; background:#fff; border:1px solid var(--gl-line);
+  border-radius:var(--gl-radius); box-shadow:0 4px 16px rgba(0,45,90,.06); }
+
+/* the toggle and its key: a row over the ring (controls left, key right, as
+   on the knowledge path's bar). It lives in the ring column so the panel can
+   run the full height of the card. */
+.tool__bar{ display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px 24px;
+  margin:0 0 8px; }
+/* the key is plain text with a drawn sample of the dashed stage: no pill */
+.tool__key{ display:flex; align-items:center; gap:10px; margin:0; font-size:14.5px; line-height:1.4; color:var(--gl-body); }
+.tool__sw{ flex:none; width:22px; height:22px; border-radius:50%; border:2px dashed var(--gl-dash);
+  transition:border-color .3s var(--gl-ease); }
+.tool__key.is-t23 .tool__sw{ border-color:var(--gl-t23); }
+
+/* toggle - the knowledge path's .seg. v2 adds a hairline ring (3.5:1) to the
+   pressed segment so the state no longer rests on a 1.1:1 fill change. */
+.seg{ display:inline-flex; background:var(--gl-seg); border-radius:999px; padding:4px; gap:4px; }
+.seg button{ border:0; background:transparent; font-size:14.5px; font-weight:700; color:var(--gl-body);
+  padding:10px 18px; min-height:44px; border-radius:999px; cursor:pointer; white-space:nowrap;
+  transition:background .2s var(--gl-ease), color .2s, box-shadow .2s; }
+.seg button:hover{ color:var(--gl-ink); }
+.seg button[aria-pressed="true"]{ background:#fff; color:var(--gl-ink);
+  box-shadow:0 2px 8px rgba(24,27,68,.12), inset 0 0 0 1px var(--gl-ghost-line); }
+.seg button:focus-visible{ outline:3px solid var(--gl-focus); outline-offset:2px; }
+
+.loop{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,480px); gap:40px;
+  padding:28px 28px 32px; align-items:start; }
+/* the ring stays in view while the panel beside it is read */
+.ringwrap{ min-width:0; position:sticky; top:var(--gl-sticky-top,24px); }
+
+/* ---------- ring ---------- */
+/* square, never taller than the screen (a short laptop gets a smaller ring,
+   not a cropped one). The ring is a size container: circles, badges and
+   labels are measured in cqi, so they shrink and grow with it. */
+.ring{ position:relative; aspect-ratio:1/1; margin:0 auto; container-type:inline-size;
+  width:min(100%, max(600px, calc(100svh - var(--gl-sticky-top,24px) - 84px)));
+  --node:clamp(108px, 20cqi, 150px); }
+.arcs{ position:absolute; inset:0; width:100%; height:100%; overflow:visible; pointer-events:none; }
+.arc{ fill:none; stroke:var(--gl-arc); stroke-width:.45; stroke-linecap:round; }
+.arrowhead{ fill:var(--gl-arc); }
+.arc.is-close{ stroke:var(--gl-blue); stroke-width:.5; stroke-dasharray:1.3 1.1; }
+.arrowhead.is-close{ fill:var(--gl-blue); }
+/* arcs into or out of a set-back stage: still visible, clearly secondary */
+.arc,.arrowhead{ transition:opacity .3s, stroke .3s, fill .3s; }
+.arc.is-dim,.arrowhead.is-dim{ opacity:.65; }
+/* the way Next goes from the selected stage */
+.arc.is-next{ stroke:var(--gl-blue); stroke-width:.6; opacity:1; }
+.arrowhead.is-next{ fill:var(--gl-blue); opacity:1; }
+.arc.is-next.is-draw{ stroke-dasharray:1; animation:gl-draw .3s var(--gl-ease) both; transition:opacity .3s; }
+.arrowhead.is-next.is-draw{ animation:gl-fade .12s var(--gl-ease) .16s both; transition:opacity .3s; }
+@keyframes gl-draw{ from{ stroke-dashoffset:1; } to{ stroke-dashoffset:0; } }
+@keyframes gl-fade{ from{ opacity:0; } to{ opacity:1; } }
+
+/* the loop's title in the middle: plain text, not a control - quieter than
+   the stage names around it */
+.hub{ position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:36%; text-align:center; pointer-events:none; }
+.hub__t{ margin:0; font-size:clamp(22px,3.7cqi,30px); line-height:1.1; letter-spacing:-.01em; font-weight:600; color:var(--gl-ink); }
+.hub__s{ margin:4px 0 0; font-size:clamp(13px,2cqi,15px); line-height:1.4; color:var(--gl-body); }
+
+/* stage circles - these ARE buttons, so they get the hover and the lift */
+.node{ position:absolute; left:var(--x); top:var(--y); transform:translate(-50%,-50%);
+  width:var(--node); height:var(--node); border-radius:50%; cursor:pointer; padding:10px;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1px; text-align:center;
+  font:inherit; color:var(--gl-ink);
+  background:color-mix(in srgb, var(--nc) 8%, #fff);
+  border:2px solid color-mix(in srgb, var(--nc) 38%, #fff);
+  transition:background .25s var(--gl-ease), border-color .25s var(--gl-ease), box-shadow .25s var(--gl-ease), transform .25s var(--gl-ease); }
+.node:hover{ border-color:var(--nc); }
+@media (hover:hover) and (pointer:fine){
+  .node:hover{ box-shadow:0 10px 22px rgba(0,45,90,.14); transform:translate(-50%,calc(-50% - 2px)); }
+}
+.node:active{ transform:translate(-50%,-50%) scale(.97); transition-duration:.12s; }
+.node:focus-visible{ outline:3px solid var(--gl-focus); outline-offset:5px; }
+.node__badge{ width:clamp(26px,4.6cqi,34px); height:clamp(26px,4.6cqi,34px); border-radius:50%;
+  background:var(--nc); color:var(--nt); display:flex; align-items:center; justify-content:center;
+  font-size:clamp(12px,1.9cqi,14px); margin-bottom:5px; flex:none;
+  transition:background .25s var(--gl-ease), color .25s var(--gl-ease), filter .25s var(--gl-ease), opacity .25s var(--gl-ease); }
+/* number in the stage colour, name in ink and the largest text in the circle:
+   number → name → tier reads top-down at a glance */
+.node__n{ font-size:clamp(11.5px,1.75cqi,13px); font-weight:700; letter-spacing:.06em; line-height:1.2;
+  color:var(--nc); font-variant-numeric:tabular-nums; transition:color .25s var(--gl-ease); }
+.node--ink .node__n{ color:var(--gl-ink); }
+/* the name is held to the part of the circle wide enough for it and is never
+   squeezed or cut (it can grow past the circle under user text spacing
+   rather than lose words) */
+.node__name{ font-size:clamp(13px,2.2cqi,16px); font-weight:600; line-height:1.16; color:var(--gl-ink);
+  max-width:calc(var(--node) * .78); flex:none; overflow-wrap:break-word; hyphens:auto;
+  transition:color .25s var(--gl-ease); }
+/* small rings (tablets, zoom): the glyph badge gives its room to the name */
+@container (max-width:700px){
+  .node__badge{ display:none; }
+  .node__n{ margin-bottom:1px; }
+}
+.node__tier{ font-size:clamp(11.5px,1.7cqi,12.5px); font-weight:700; color:var(--gl-body); margin-top:3px;
+  white-space:nowrap; transition:color .25s var(--gl-ease); }
+.node__chev{ display:none; }
+
+/* Selected: the whole circle fills with its stage colour, so the active stage
+   is obvious at a glance. Every label colour on its fill passes AA (white on
+   blue 7.75, on purple 6.24). A halo and a small scale carry it too. */
+.node.is-sel{ background:var(--nc); border-color:var(--nc);
+  box-shadow:0 0 0 6px color-mix(in srgb, var(--nc) 20%, #fff), 0 14px 26px -10px rgba(0,45,90,.35);
+  transform:translate(-50%,-50%) scale(1.07); }
+.node.is-sel:hover{ transform:translate(-50%,-50%) scale(1.07);
+  box-shadow:0 0 0 6px color-mix(in srgb, var(--nc) 20%, #fff), 0 14px 26px -10px rgba(0,45,90,.35); }
+.node.is-sel:focus-visible{ outline-offset:9px; }
+.node.is-sel .node__n,.node.is-sel .node__name,.node.is-sel .node__tier{ color:var(--nt); }
+.node.is-sel .node__badge{ background:rgba(255,255,255,.2); }
+.node--ink.is-sel .node__badge{ background:rgba(24,27,68,.12); }
+
+/* Stages 2 & 6 are only for Tier 2 & 3 students, so in the Tier 2 & 3 view
+   they get a dashed outer ring in their own colour - the same dash as the
+   loop's closing line - plus their "Tier 2 & 3" label. */
+.node--t23::after{ content:""; position:absolute; inset:-10px; border-radius:50%;
+  border:2px dashed var(--nc); pointer-events:none; opacity:0; transform:scale(.92);
+  transition:opacity .25s var(--gl-ease), transform .25s var(--gl-ease), inset .25s var(--gl-ease); }
+.node--t23.is-t23::after{ opacity:1; transform:none; }
+.node--t23.is-t23.is-sel::after{ inset:-16px; }
+
+/* Tier 2 & 3 stages in the All students view: set back, but still readable
+   because they still work. Opacity is NOT used on text - it would drag it
+   under 4.5:1. The face and badge fade; the dashed border is a visible 3:1
+   (was 1.44:1, the key beside the toggle points at it). */
+.node.is-out{ background:#fff; border:2px dashed var(--gl-dash); box-shadow:none; }
+.node.is-out .node__badge{ filter:grayscale(1); opacity:.4; }
+.node.is-out .node__n,.node.is-out .node__tier{ color:var(--gl-out); }
+.node.is-out .node__name{ color:var(--gl-name-out); }
+.node.is-out:hover{ border-color:var(--nc); border-style:dashed; }
+.node.is-out:hover .node__badge{ filter:none; opacity:1; }
+
+/* ---------- detail panel (final.css .pillar--tint) ---------- */
+/* Stage colour marks which stage the panel belongs to (the badge, the role
+   icons, the row hover tint). Everything that can be clicked stays Benchmark
+   blue. No accent bars. */
+.detail[hidden]{ display:none; }
+.detail{ min-width:0; scroll-margin-top:var(--gl-sticky-top,24px); background:var(--gl-tint);
+  border-radius:var(--gl-radius); padding:28px 28px 24px; }
+.d-eyebrow{ display:flex; flex-wrap:wrap; align-items:center; gap:4px 12px; margin:0 0 10px;
+  font-size:12.5px; line-height:1.5; letter-spacing:1px; text-transform:uppercase; font-weight:700; color:var(--gl-blue); }
+/* "Tier 2 & 3" is a label, so plain text with the dashed mark - no pill */
+.d-tier{ display:inline-flex; align-items:center; gap:7px; color:var(--gl-t23); }
+.d-tier::before{ content:""; width:12px; height:12px; border-radius:50%; border:2px dashed currentColor; }
+.d-title{ display:flex; align-items:center; gap:14px; }
+.d-badge{ width:44px; height:44px; border-radius:50%; background:var(--nc); color:var(--nt); flex:none;
+  display:flex; align-items:center; justify-content:center; font-size:18px; }
+.d-name{ margin:0; font-size:26px; line-height:1.15; letter-spacing:-.01em; font-weight:600; color:var(--gl-ink);
+  overflow-wrap:anywhere; hyphens:auto; }
+.d-name .nw2{ white-space:nowrap; }
+.d-name:focus{ outline:none; }
+.d-name:focus-visible{ outline:3px solid var(--gl-focus); outline-offset:4px; border-radius:4px; }
+.d-desc{ margin:14px 0 0; font-size:16px; line-height:1.6; color:var(--gl-body); max-width:62ch; overflow-wrap:anywhere; }
+
+/* a link-style button (final.css .linkline): blue, bold, with its own icon */
+.d-video{ margin:16px 0 0; display:inline-flex; align-items:center; gap:10px; border:0; background:none; text-align:left;
+  padding:6px 0; min-height:44px; cursor:pointer; font-size:15px; font-weight:700; color:var(--gl-blue); overflow-wrap:anywhere; }
+.d-video__p{ width:32px; height:32px; border-radius:50%; background:var(--gl-blue); color:#fff; flex:none;
+  display:flex; align-items:center; justify-content:center; font-size:11px; padding-left:2px;
+  transition:background .2s, transform .2s var(--gl-ease); }
+.d-video:hover > span:last-child{ text-decoration:underline; text-underline-offset:3px; }
+.d-video:hover .d-video__p{ background:var(--gl-blue-hover); }
+@media (hover:hover) and (pointer:fine){ .d-video:hover .d-video__p{ transform:scale(1.08); } }
+
+/* sections inside the panel: more air above a heading than below it */
+.d-sec{ margin-top:28px; }
+.d-h3{ margin:0; font-size:17px; line-height:1.3; letter-spacing:-.01em; font-weight:600; color:var(--gl-ink); }
+/* plain text: an instruction, not a control */
+.d-hint{ margin:2px 0 14px; font-size:14px; line-height:1.5; color:var(--gl-body); }
+
+/* steps: one list per role, a handoff line between them */
+.steps{ margin:0; }
+.who{ display:flex; align-items:center; gap:10px; margin:0 0 4px; font-size:14.5px; font-weight:700; color:var(--gl-ink); }
+.who__ic{ width:28px; height:28px; border-radius:50%; background:var(--nc,var(--gl-blue)); color:var(--nt,#fff); flex:none;
+  display:flex; align-items:center; justify-content:center; font-size:13px; }
+/* not a link, so not blue; a quiet rule after it marks the change */
+.hand{ display:flex; align-items:center; gap:8px; margin:14px 0 12px; font-size:13.5px; font-weight:600; color:var(--gl-body); }
+.hand i{ font-size:12px; }
+.hand::after{ content:""; flex:1; height:1px; background:var(--gl-line); }
+.grp__list{ list-style:none; margin:0; padding:0; }
+.grp__list li + li{ border-top:1px solid var(--gl-line); }
+/* the whole row is the button; the thumbnail says "this opens a screen" */
+.step__btn{ display:grid; grid-template-columns:26px minmax(0,1fr) 76px; gap:12px; align-items:center;
+  width:calc(100% + 16px); margin:0 -8px; padding:8px; border:0; background:none; text-align:left;
+  cursor:zoom-in; border-radius:10px; color:inherit; font:inherit;
+  transition:background .2s var(--gl-ease); }
+.step__n{ align-self:start; padding-top:2px; font-size:12.5px; font-weight:700; color:var(--gl-body); font-variant-numeric:tabular-nums; }
+.step__body{ min-width:0; }
+.step__t{ display:block; font-size:15px; line-height:1.4; color:var(--gl-text); overflow-wrap:break-word; }
+.step__a{ display:block; margin-top:1px; font-size:13px; line-height:1.4; color:var(--gl-body); overflow-wrap:break-word; }
+.step__thumb{ position:relative; width:76px; aspect-ratio:16/10; border-radius:6px; overflow:hidden; background:#fff;
+  box-shadow:0 0 0 1px var(--gl-line); display:flex; align-items:center; justify-content:center;
+  transition:box-shadow .2s; }
+.step__thumb i{ font-size:15px; color:var(--gl-glyph); }
+.step__thumb img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:left top;
+  transition:transform .35s var(--gl-ease); }
+.step__btn:hover{ background:color-mix(in srgb, var(--nc,var(--gl-blue)) 8%, #fff); }
+.step__btn:hover .step__t{ color:var(--gl-blue); text-decoration:underline; text-underline-offset:3px; }
+.step__btn:hover .step__thumb{ box-shadow:0 0 0 1.5px var(--gl-blue); }
+@media (hover:hover) and (pointer:fine){ .step__btn:hover .step__thumb img{ transform:scale(1.06); } }
+.step__btn:focus-visible{ outline:3px solid var(--gl-focus); outline-offset:0;
+  background:color-mix(in srgb, var(--nc,var(--gl-blue)) 8%, #fff); }
+
+.branch{ list-style:none; margin:10px 0 0; padding:0; }
+.branch li{ display:grid; grid-template-columns:minmax(0,1fr) 18px minmax(0,1.1fr); gap:12px; align-items:baseline;
+  padding:9px 0; border-top:1px solid var(--gl-line); }
+.branch li:first-child{ border-top:0; }
+.branch__if{ font-size:15px; line-height:1.45; color:var(--gl-body); overflow-wrap:anywhere; }
+.branch__arrow{ font-size:13px; color:var(--gl-blue); }
+.branch__then{ font-size:15px; line-height:1.45; font-weight:600; color:var(--gl-ink); overflow-wrap:anywhere; }
+
+/* stage-to-stage navigation: next is the primary action (final.css .btn),
+   previous the secondary one (final.css .btn-ghost). The direction is a
+   caption, the stage name sits under it - so the pair always reads the same
+   however long the names are. */
+.pager{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:24px; padding:16px 0 4px;
+  border-top:1px solid var(--gl-line); background:var(--gl-tint); }
+/* stacked layouts: the pager stays at the bottom of the screen while the
+   panel is being read, so the next stage is never a scroll away */
+@media (max-width:1239px){
+  .pager{ position:sticky; bottom:0; z-index:2; margin-left:-4px; margin-right:-4px; padding:12px 4px;
+    box-shadow:0 -10px 16px -12px rgba(0,45,90,.18); }
+}
+.pg{ min-width:0; min-height:52px; padding:10px 16px; justify-content:center; gap:8px; line-height:1.3; }
+.pg__dir{ display:inline-flex; align-items:center; gap:10px; }
+/* the stage name is read out ("Next stage Universal Screening") but not
+   shown: the ring beside the panel, with its blue "next" arc, already says
+   where the buttons go */
+.pg__name{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden;
+  clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+.pg i{ flex:none; transition:transform .2s var(--gl-ease); }
+@media (hover:hover) and (pointer:fine){
+  .pg--next:hover i{ transform:translateX(3px); }
+  .pg--prev:hover i{ transform:translateX(-3px); }
+}
+.btn{ display:inline-flex; align-items:center; gap:10px; border:0; cursor:pointer; background:var(--gl-blue);
+  color:#fff; font-weight:700; font-size:15px; letter-spacing:.2px; line-height:24px; padding:12px 22px;
+  border-radius:8px; transition:background .2s,transform .2s,box-shadow .2s; }
+.btn:hover{ background:var(--gl-blue-hover); box-shadow:0 8px 18px rgba(0,83,155,.25); }
+@media (hover:hover) and (pointer:fine){ .btn:hover{ transform:translateY(-1px); } }
+.btn-ghost{ display:inline-flex; align-items:center; gap:10px; cursor:pointer; background:#fff;
+  border:1px solid var(--gl-ghost-line); border-radius:5px; padding:11px 18px; color:var(--gl-blue);
+  font-weight:700; font-size:15px; line-height:24px; transition:background .2s,border-color .2s; }
+.btn-ghost:hover{ background:#F0F5FB; border-color:var(--gl-blue); }
+.btn:focus-visible,.btn-ghost:focus-visible,.d-video:focus-visible{ outline:3px solid var(--gl-focus); outline-offset:3px; }
+
+/* new stage: the panel's content settles into place, top to bottom, quickly */
+@keyframes gl-in{ from{ opacity:0; transform:translateY(8px); } to{ opacity:1; transform:none; } }
+.detail.is-in .d-scroll > *{ animation:gl-in .26s var(--gl-ease) both; }
+.detail.is-in .d-scroll > :nth-child(2){ animation-delay:.03s; }
+.detail.is-in .d-scroll > :nth-child(3){ animation-delay:.06s; }
+.detail.is-in .d-scroll > :nth-child(n+4){ animation-delay:.09s; }
+.d-scroll:focus{ outline:none; }
+.d-scroll:focus-visible{ outline:3px solid var(--gl-focus); outline-offset:-3px; border-radius:var(--gl-radius); }
+
+/* ---------- floating card: set-back stage tooltip ---------- */
+.pop{ position:absolute; z-index:60; max-width:300px; background:#fff; color:var(--gl-ink);
+  border:1px solid var(--gl-line); border-radius:12px; padding:12px 14px;
+  box-shadow:0 14px 34px rgba(0,45,90,.18), 0 2px 6px rgba(0,45,90,.08); }
+/* invisible bridge over the gap to the stage, so the pointer can reach it */
+.pop::before{ content:""; position:absolute; left:0; right:0; top:100%; height:10px; }
+.pop.is-below::before{ top:auto; bottom:100%; }
+.pop[hidden]{ display:none; }
+.pop__h{ margin:0; font-size:14.5px; line-height:1.4; font-weight:700; color:var(--gl-ink); }
+.pop__p{ margin:4px 0 0; font-size:14px; line-height:1.45; color:var(--gl-text); }
+
+/* ---------- dialogs (video + screenshots) ----------
+   They rise and fade in, and leave faster than they came. Modern browsers
+   animate both ways (@starting-style + allow-discrete); others just appear. */
+.vmodal{ border:0; border-radius:16px; padding:0; width:min(900px, calc(100vw - 32px));
+  max-height:calc(100dvh - 32px); background:#fff; color:var(--gl-ink); overflow:hidden;
+  overscroll-behavior:contain;
+  opacity:0; transform:translateY(10px) scale(.98);
+  transition:opacity .15s var(--gl-ease), transform .15s var(--gl-ease), overlay .15s allow-discrete, display .15s allow-discrete; }
+.vmodal[open]{ opacity:1; transform:none;
+  transition:opacity .2s var(--gl-ease), transform .28s var(--gl-ease), overlay .28s allow-discrete, display .28s allow-discrete; }
+@starting-style{ .vmodal[open]{ opacity:0; transform:translateY(10px) scale(.98); } }
+.vmodal::backdrop{ background:rgba(10,16,40,0);
+  transition:background .15s var(--gl-ease), overlay .15s allow-discrete, display .15s allow-discrete; }
+.vmodal[open]::backdrop{ background:rgba(10,16,40,.66); transition:background .25s var(--gl-ease), overlay .28s allow-discrete, display .28s allow-discrete; }
+@starting-style{ .vmodal[open]::backdrop{ background:rgba(10,16,40,0); } }
+.vmodal__head{ display:flex; align-items:center; justify-content:space-between; gap:16px;
+  padding:14px 16px 14px 20px; border-bottom:1px solid var(--gl-line); }
+.vmodal__head h2{ font-size:17px; line-height:1.3; margin:0; color:var(--gl-ink); }
+.vmodal__close{ flex:none; border:0; background:transparent; border-radius:50%; cursor:pointer; font-size:18px;
+  color:var(--gl-body); width:44px; height:44px; transition:background .2s, color .2s; }
+.vmodal__close:hover{ background:var(--gl-seg); color:var(--gl-ink); }
+.vmodal__close:focus-visible{ outline:3px solid var(--gl-focus); outline-offset:2px; }
+.vmodal__frame{ position:relative; aspect-ratio:16/9; background:#000; }
+.vmodal__frame iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+
+/* the screenshot viewer fills the screen it has (never taller than it) */
+.shot{ width:min(1180px, calc(100vw - 32px)); height:min(860px, calc(100dvh - 32px)); }
+.shot[open]{ display:grid; grid-template-rows:auto minmax(0,1fr) auto; }
+.shot .vmodal__head{ align-items:flex-start; }
+.shot__head{ min-width:0; }
+.shot__meta{ margin:0 0 2px; font-size:12.5px; line-height:1.5; letter-spacing:1px; text-transform:uppercase;
+  font-weight:700; color:var(--gl-blue); overflow-wrap:anywhere; }
+.shot__sub{ margin:2px 0 0; font-size:14px; line-height:1.4; color:var(--gl-body); }
+.shot__stage{ position:relative; min-height:0; background:var(--gl-tint); padding:20px 76px; }
+.shot__fig{ width:100%; height:100%; display:flex; align-items:center; justify-content:center; touch-action:pan-y pinch-zoom; }
+.shot__fig img{ display:block; max-width:100%; max-height:100%; width:auto; height:auto; object-fit:contain;
+  border-radius:6px; background:#fff; box-shadow:0 0 0 1px var(--gl-line), 0 8px 24px rgba(0,45,90,.10); }
+.shot__fig.is-swap > *{ animation:gl-swap .18s var(--gl-ease) both; }
+@keyframes gl-swap{ from{ opacity:.4; transform:translateX(calc(var(--dir,0) * 8px)); } to{ opacity:1; transform:none; } }
+/* the placeholder fills the frame at the real screenshots' proportions */
+.shot__ph{ width:min(100%, calc((100dvh - 260px) * 1280 / 656)); }
+.shot__ph .ph{ display:block; width:100%; height:auto; border-radius:6px; }
+.shot__nav{ position:absolute; top:50%; transform:translateY(-50%); width:48px; height:48px; border-radius:50%;
+  border:1px solid var(--gl-ghost-line); background:#fff; color:var(--gl-blue); cursor:pointer; font-size:16px;
+  display:flex; align-items:center; justify-content:center; box-shadow:0 4px 12px rgba(0,45,90,.10);
+  transition:background .2s, border-color .2s, opacity .2s; }
+.shot__nav--prev{ left:16px; } .shot__nav--next{ right:16px; }
+.shot__nav:hover{ background:#F0F5FB; border-color:var(--gl-blue); }
+.shot__nav[aria-disabled="true"]{ opacity:.4; cursor:default; }
+.shot__nav[aria-disabled="true"]:hover{ background:#fff; border-color:var(--gl-ghost-line); }
+.shot__nav:focus-visible{ outline:3px solid var(--gl-focus); outline-offset:2px; }
+.shot__foot{ display:flex; align-items:center; gap:16px; padding:10px 16px 12px 20px; border-top:1px solid var(--gl-line); min-width:0; }
+.shot__count{ flex:none; font-size:14px; font-weight:600; color:var(--gl-body); font-variant-numeric:tabular-nums; }
+.shot__strip{ flex:1; min-width:0; display:flex; gap:8px; list-style:none; margin:0; padding:4px;
+  overflow-x:auto; scrollbar-width:thin; scrollbar-color:var(--gl-scroll) transparent; }
+.shot__strip li{ flex:none; }
+.shot__strip button{ position:relative; display:flex; align-items:center; justify-content:center;
+  width:76px; aspect-ratio:16/10; padding:0; border:0; border-radius:6px; overflow:hidden; cursor:pointer;
+  background:#fff; box-shadow:0 0 0 1px var(--gl-line); opacity:.75; transition:opacity .2s, box-shadow .2s; }
+.shot__strip button i{ font-size:14px; color:var(--gl-glyph); }
+.shot__strip img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:left top; }
+.shot__strip button:hover{ opacity:1; box-shadow:0 0 0 1.5px var(--gl-blue); }
+.shot__strip button[aria-current="step"]{ opacity:1; box-shadow:0 0 0 2px var(--gl-blue); }
+.shot__strip button:focus-visible{ outline:3px solid var(--gl-focus); outline-offset:2px; }
+
+.loopback{ display:none; }
+
+/* ---------- side by side (1240px and up) ----------
+   The panel is as tall as the ring (--gl-panel-h, set in JS). Its content
+   scrolls; Previous / Next stay pinned at the bottom, level with the bottom
+   of the ring, so they are always in view. The scrollbar is always shown
+   (thin, in the line colour) and the text fades under the edges where there
+   is more, so nothing is hidden silently. */
+@media (min-width:1240px){
+  /* desktop circles are never smaller than v1's 146px */
+  .ring{ --node:clamp(146px, 21cqi, 156px); }
+  .detail{ position:relative; display:flex; flex-direction:column; height:var(--gl-panel-h,auto); padding:0; }
+  .d-scroll{ flex:1 1 auto; min-height:0; overflow-y:auto; padding:28px 22px 12px 28px;
+    scrollbar-width:thin; scrollbar-color:var(--gl-scroll) transparent; scrollbar-gutter:stable; }
+  .d-scroll::-webkit-scrollbar{ width:8px; }
+  .d-scroll::-webkit-scrollbar-thumb{ background:var(--gl-scroll); border-radius:4px; }
+  .d-scroll::-webkit-scrollbar-thumb:hover{ background:var(--gl-dash); }
+  .detail::before{ content:""; position:absolute; z-index:1; top:0; left:28px; right:36px; height:28px; pointer-events:none;
+    background:linear-gradient(var(--gl-tint), rgba(244,247,251,0)); opacity:0; transition:opacity .2s; }
+  .detail.is-scrolled::before{ opacity:1; }
+  .pager{ position:relative; flex:none; margin:0 28px; padding:16px 0 24px; }
+  .detail:not(.is-scroll) .pager{ border-top-color:transparent; }
+  .pager::before{ content:""; position:absolute; left:0; right:8px; bottom:calc(100% + 1px); height:40px; pointer-events:none;
+    background:linear-gradient(rgba(244,247,251,0), var(--gl-tint)); opacity:0; transition:opacity .2s; }
+  .detail.has-more .pager::before{ opacity:1; }
+}
+
+/* ---------- 1240-1439px: still side by side ----------
+   Narrower page margins and panel give the ring column 600-780px. */
+@media (max-width:1439px){
+  .a-shell{ padding:0 40px; }
+  .loop{ grid-template-columns:minmax(0,1fr) minmax(0,420px); gap:32px; }
+}
+/* ---------- 640-1239px: ring above, panel below ----------
+   Side by side the ring column would drop under ~600px and crowd; stacked,
+   the ring keeps up to 720px - so tablets see the whole loop. */
+@media (max-width:1239px){
+  .loop{ grid-template-columns:1fr; gap:28px; }
+  .ringwrap{ position:relative; top:auto; }
+  .ring{ width:100%; max-width:720px; margin:0 auto; }
+  .detail{ width:100%; max-width:860px; margin:0 auto; }
+}
+@media (max-width:1200px){
+  .a-motif{ opacity:.06; }
+}
+@media (max-width:860px){
+  .a-top{ display:block; }
+  .a-motif{ display:none; }
+  .a-band{ padding:40px 0; }
+  .a-shell{ padding:0 16px; }
+  .a-h2{ font-size:30px; line-height:1.12; }
+  .a-sub{ font-size:18px; margin-top:12px; }
+  .a-lede{ font-size:16px; margin-top:14px; }
+  .tool{ margin-top:24px; }
+  .loop{ padding:24px 20px 24px; }
+  .detail{ padding:24px 20px 20px; }
+}
+/* touch screens: every control at least 44px tall */
+@media (pointer:coarse){
+  .step__btn{ min-height:48px; }
+  .pg{ min-height:56px; }
+}
+
+/* ---------- phone (under 640px): the loop as a vertical list ----------
+   A spine runs through the stage badges, top to bottom, and the last row
+   hands back to stage 01 - the loop, unrolled. Each stage opens in place. */
+@media (max-width:639px){
+  .tool__bar{ margin-bottom:14px; }
+  .seg{ display:flex; width:100%; }
+  .seg button{ flex:1 1 0; min-width:0; text-align:center; padding:12px 6px; font-size:14px; white-space:normal; line-height:1.2; }
+  .tool__key{ font-size:14px; }
+
+  .loop{ display:block; padding:12px 14px 16px; }
+  .ring{ aspect-ratio:auto; width:100%; max-width:none; container-type:normal;
+    display:flex; flex-direction:column; gap:2px; }
+  .arcs,.hub{ display:none; }
+  /* the spine: from the first badge's centre to the last one's */
+  .ring::before{ content:""; position:absolute; left:31px; top:32px; bottom:32px; width:2px;
+    background:var(--gl-spine); border-radius:1px; }
+  .node{ position:relative; z-index:1; left:auto; top:auto; transform:none; width:100%; height:auto; min-height:64px;
+    border:0; border-radius:12px; background:transparent; padding:10px 12px;
+    display:grid; grid-template-columns:38px 24px minmax(0,1fr) 16px; grid-template-rows:auto auto;
+    grid-template-areas:"b n name c" "b n tier c"; column-gap:10px; align-content:center; align-items:center; text-align:left; }
+  .node__badge{ grid-area:b; display:flex; margin:0; width:38px; height:38px; font-size:15px;
+    box-shadow:0 0 0 4px #fff; }
+  .node__n{ grid-area:n; font-size:13px; }
+  .node__name{ grid-area:name; max-width:none; font-size:16px; line-height:1.25; }
+  .node__tier{ grid-area:tier; margin:2px 0 0; font-size:12.5px; }
+  /* no tier line: the name takes both rows, so it centres on the badge */
+  .node:not(.node--t23) .node__name{ grid-row:1 / span 2; }
+  .node__chev{ grid-area:c; display:block; font-size:13px; color:var(--gl-body); transition:transform .25s var(--gl-ease); }
+  .node:hover{ transform:none; box-shadow:none; background:var(--gl-seg); }
+  .node:hover .node__badge{ box-shadow:0 0 0 4px var(--gl-seg); }
+  .node:active{ transform:none; }
+  .node:focus-visible{ outline-offset:2px; }
+  .node.is-sel,.node.is-sel:hover{ transform:none; background:var(--nc); box-shadow:none; }
+  .node.is-sel .node__badge{ box-shadow:0 0 0 4px var(--nc); }
+  .node.is-sel .node__chev{ transform:rotate(180deg); color:var(--nt); }
+  .node.is-sel:focus-visible{ outline-offset:3px; }
+  .node--t23::after{ display:none; }
+  /* Tier 2 & 3 rows: a dashed ring round the badge (grey when set back) */
+  .node.is-out{ border:0; background:transparent; }
+  .node.is-out .node__badge{ filter:none; opacity:1; background:#fff; color:var(--gl-out);
+    outline:2px dashed var(--gl-dash); outline-offset:-2px; }
+  .node.is-out:hover .node__badge{ background:#fff; color:var(--nc); outline-color:var(--nc); }
+  .node.is-t23 .node__badge{ outline:2px dashed var(--nc); outline-offset:3px; }
+  .node.is-t23.is-sel .node__badge{ outline-color:#fff; }
+
+  /* the open stage's panel: the row above already names it */
+  .detail{ position:relative; z-index:1; margin:4px 0 10px; padding:18px 16px 16px; }
+  .d-head{ display:none; }
+  .d-desc{ margin-top:0; }
+  .step__btn{ grid-template-columns:24px minmax(0,1fr) 60px; gap:10px; cursor:pointer; }
+  .step__thumb{ width:60px; }
+  .branch li{ grid-template-columns:minmax(0,1fr); gap:2px; }
+  .branch__arrow{ display:none; }
+  .branch__then::before{ content:"\2192\00a0"; color:var(--gl-blue); }
+  .pg{ padding:10px 12px; }
+  .pg__more{ display:none; }
+
+  .loopback{ display:flex; justify-content:center; width:100%; min-height:48px; margin-top:10px; }
+
+  /* the viewer takes the whole screen */
+  .vmodal{ width:100vw; max-width:100vw; max-height:100dvh; border-radius:0; transform:translateY(12px); }
+  @starting-style{ .vmodal[open]{ transform:translateY(12px); } }
+  .shot{ height:100dvh; }
+  .vmodal__head{ padding:10px 8px 10px 16px; }
+  .shot__stage{ padding:12px 8px 64px; }
+  .shot__nav{ top:auto; bottom:10px; transform:none; width:44px; height:44px; }
+  .shot__nav--prev{ left:auto; right:62px; } .shot__nav--next{ right:10px; }
+  .shot__foot{ padding:8px 12px 12px; gap:10px; }
+  .shot__strip button{ width:60px; }
+}
+@media (max-width:479px){
+  .step__thumb{ display:none; }
+  .step__btn{ grid-template-columns:24px minmax(0,1fr); }
+}
+@media (max-width:359px){
+  .node{ grid-template-columns:34px 22px minmax(0,1fr) 14px; padding:10px 8px; }
+  .node__badge{ width:34px; height:34px; }
+  .ring::before{ left:25px; }
+}
+
+/* Reduced motion: fewer and gentler, not none. Nothing moves, scales or
+   draws; the panel, picture and dialogs still cross-fade so changes do not
+   pop, and colour changes stay quick. */
+@keyframes gl-fade-only{ from{ opacity:0; } to{ opacity:1; } }
+@media (prefers-reduced-motion:reduce){
+  .node,.node__badge,.node__n,.node__name,.node__tier,.node__chev,.node--t23::after,.arc,.arrowhead,
+  .btn,.btn-ghost,.seg button,.step__btn,.step__thumb,.step__thumb img,.d-video__p,.pg i,.tool__sw,
+  .shot__nav,.shot__strip button,.vmodal__close{ transition-property:background-color,border-color,color,opacity,fill,stroke; transition-duration:.15s; }
+  .vmodal,.vmodal[open]{ transform:none; transition-property:opacity,overlay,display; }
+  @starting-style{ .vmodal[open]{ transform:none; } }
+  .detail.is-in .d-scroll > *,.shot__fig.is-swap > *{ animation:gl-fade-only .18s ease both; animation-delay:0s; }
+  .detail::before,.pager::before{ transition:none; }
+  .arc.is-next.is-draw,.arrowhead.is-next.is-draw{ animation:none; stroke-dasharray:none; }
+  .node:hover,.node:active{ transform:translate(-50%,-50%); }
+  .node.is-sel,.node.is-sel:hover{ transform:translate(-50%,-50%) scale(1.07); }
+  .node--t23::after{ transform:none; }
+  .btn:hover,.pg:hover i,.d-video:hover .d-video__p,.step__btn:hover .step__thumb img{ transform:none; }
+}
+@media (prefers-reduced-motion:reduce) and (max-width:639px){
+  .node,.node:hover,.node.is-sel,.node.is-sel:hover{ transform:none; }
+}

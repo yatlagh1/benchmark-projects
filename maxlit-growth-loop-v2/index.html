@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>From screening to measurable growth</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<!-- Design system: the same tokens the knowledge-path diagram uses -->
+<link rel="stylesheet" href="css/base.css?v=v2-1">
+<link rel="stylesheet" href="css/maxlit-growth-loop.css?v=v2-1">
+</head>
+<body>
+
+<main>
+<section class="a-band" id="s-growth-loop" aria-labelledby="loopTitle">
+  <div class="a-shell">
+    <div class="a-top">
+      <div class="a-head">
+        <h1 class="a-h2" id="loopTitle">From screening to measurable&nbsp;growth</h1>
+        <p class="a-sub">Lorem ipsum dolor sit amet, consectetur adipiscing&nbsp;elit</p>
+        <p class="a-lede">A shared journey showing how teachers and students move through
+          assessment, instruction, intervention, and progress&nbsp;monitoring.</p>
+      </div>
+      <div class="a-motif" aria-hidden="true"></div>
+    </div>
+
+    <div class="tool">
+      <div class="loop">
+        <div class="ringwrap">
+          <!-- the view switch and its key sit over the ring (and move with it), so
+               the panel beside can run the full height of the card -->
+          <div class="tool__bar">
+            <div class="seg" role="group" aria-label="Which students to follow">
+              <button type="button" aria-pressed="true" data-tier="1">All students</button>
+              <button type="button" aria-pressed="false" data-tier="23">Tier 2 &amp; 3 support</button>
+            </div>
+            <p class="tool__key" id="ringNote"><i class="tool__sw" aria-hidden="true"></i><span>Dashed stages are only for students in Tier&nbsp;2&nbsp;&amp;&nbsp;3.</span></p>
+          </div>
+          <div class="ring" id="ring" role="group" aria-label="The assessment cycle, stage by stage">
+            <svg class="arcs" id="arcs" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"></svg>
+            <!-- the loop's title, as in the meeting sketch ("TITLE / MTSS") -->
+            <div class="hub"><p class="hub__t">MTSS</p><p class="hub__s">Multi-Tiered System of&nbsp;Supports</p></div>
+          </div>
+          <!-- phone only: the list's last row closes the loop -->
+          <button type="button" class="btn-ghost loopback" id="loopBack">
+            <i class="fa-solid fa-rotate-right" aria-hidden="true"></i><span>Back to 01 Universal Screening</span></button>
+        </div>
+        <div class="detail" id="detail"></div>
+        <p class="sr-only" id="srStatus" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- floating card for the set-back stage tooltip -->
+<div class="pop" id="pop" role="tooltip" hidden></div>
+</main>
+
+<!-- Placeholder video: every stage opens the MAXLiteracy hero video (v34esu6nbl)
+     until the real per-stage videos are supplied. -->
+<dialog class="vmodal" id="vmodal" aria-labelledby="vmodalTitle">
+  <div class="vmodal__head">
+    <h2 id="vmodalTitle">Stage video</h2>
+    <button type="button" class="vmodal__close" id="vidClose" aria-label="Close video"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+  </div>
+  <div class="vmodal__frame">
+    <iframe id="vidFrame" title="Stage video" allow="autoplay; fullscreen" loading="lazy"></iframe>
+  </div>
+</dialog>
+
+<!-- step screenshot viewer -->
+<dialog class="vmodal shot" id="shot" aria-labelledby="shotTitle" aria-describedby="shotSub">
+  <div class="vmodal__head">
+    <div class="shot__head">
+      <p class="shot__meta" id="shotMeta"></p>
+      <h2 id="shotTitle">Step</h2>
+      <p class="shot__sub" id="shotSub"></p>
+    </div>
+    <button type="button" class="vmodal__close" id="shotClose" aria-label="Close screenshot"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+  </div>
+  <div class="shot__stage">
+    <div class="shot__fig" id="shotFig"></div>
+    <button type="button" class="shot__nav shot__nav--prev" id="shotPrev" aria-label="Previous step"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i></button>
+    <button type="button" class="shot__nav shot__nav--next" id="shotNext" aria-label="Next step"><i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
+  </div>
+  <div class="shot__foot">
+    <span class="shot__count" id="shotCount"></span>
+    <ol class="shot__strip" id="shotStrip" aria-label="Steps"></ol>
+  </div>
+  <p class="sr-only" id="shotLive" aria-live="polite"></p>
+</dialog>
+<script src="js/maxlit-growth-loop.js?v=v2-1"></script>
+</body>
+</html>
