@@ -1,0 +1,426 @@
+/* ──────────────────────────────────────────────────────────────────────────
+   A360 × MAXLit growth loop
+
+   Styled to sit on the MAXLiteracy California landing page: type scale,
+   blue, lines, tint, cards and buttons are taken from maxlit-final/css/final.css
+   (.h2 .sub .lede .eyebrow .sublabel .btn .btn-ghost .linkline), and the
+   .seg toggle matches the knowledge-path tool on the same page.
+
+   Stage colours are the MAXLiteracy brand colours from the landing page's
+   stripe, used the way the knowledge path uses its grade colours: a solid
+   badge, a pale tint behind, and the full colour only when selected.
+
+   Rule carried over from final.css: nothing that does nothing gets a pill,
+   a border-and-fill or a hover - those read as buttons.
+   ────────────────────────────────────────────────────────────────────────── */
+
+:root{
+  /* landing-page values (css/final.css) */
+  --gl-blue:#00539B; --gl-blue-hover:#003F78; --gl-ink:#222; --gl-text:#333; --gl-body:#686666;
+  --gl-line:#E0E3EB; --gl-line-strong:#B9B9B9; --gl-tint:#F4F7FB; --gl-radius:16px;
+}
+
+body{ background:#fff; color:var(--gl-ink); }
+/* no widow words: headings balance their lines, running text avoids a lone
+   last word (the JS also glues the last two words with a no-break space) */
+h1,h2,h3,.a-h2,.a-sub,.hub__name,.d-name,.node__name{ text-wrap:balance; }
+p,li,.step__t,.branch__if,.branch__then,.pager button{ text-wrap:pretty; }
+button{ font-family:var(--font); }
+.sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden;
+  clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+
+/* ---------- section head (final.css .band .head) ---------- */
+.a-band{ padding:60px 0; background:#fff; }
+.a-shell{ max-width:1440px; margin:0 auto; padding:0 80px; }
+.a-head{ max-width:767px; }
+
+/* Decorative doodle motif to the right of the head - the landing page's
+   .band--bird image, size (480 x 267) and opacity (final.css).
+   It shares the row with the head text (767 : 480, the landing page's two
+   widths), so at 1440 it is full size, and on a narrower screen it scales down
+   with its aspect ratio kept - it is always shown whole, never cropped by the
+   page edge and never behind the tool card. It may rise into the band's top
+   padding, as it does on the landing page. */
+.a-top{ display:grid; grid-template-columns:minmax(540px,767fr) minmax(0,480fr); column-gap:32px; align-items:start; }
+.a-motif{ width:100%; max-width:480px; aspect-ratio:982/547; justify-self:end; margin-top:-44px;
+  background:url("../assets/motif02.png") no-repeat center/contain; opacity:.085; }
+.a-h2{ font-size:44px; line-height:1.06; letter-spacing:-.01em; font-weight:600; color:var(--gl-ink); margin:0; }
+.a-sub{ font-size:22px; line-height:1.3; letter-spacing:-.01em; font-weight:600; color:var(--gl-blue); margin:16px 0 0; }
+.a-lede{ font-size:18px; line-height:1.65; font-weight:500; color:var(--gl-body); margin:20px 0 0; }
+
+/* ---------- tool card ---------- */
+.tool{ margin-top:40px; background:#fff; border:1px solid var(--gl-line);
+  border-radius:var(--gl-radius); box-shadow:0 4px 16px rgba(0,45,90,.06); }
+/* no overflow:hidden on .tool - it would turn the card into the scroll
+   container and stop the ring from staying in view */
+
+/* toggle - the knowledge path's .seg */
+.seg{ display:inline-flex; background:#F0F4F9; border-radius:999px; padding:4px; gap:4px; }
+.seg button{ border:0; background:transparent; font-size:14.5px; font-weight:700; color:var(--gl-body);
+  padding:10px 18px; border-radius:999px; cursor:pointer; white-space:nowrap; transition:background .15s,color .15s; }
+.seg button:hover{ color:var(--gl-ink); }
+.seg button[aria-pressed="true"]{ background:#fff; color:var(--gl-ink); box-shadow:0 2px 8px rgba(24,27,68,.12); }
+.seg button:focus-visible{ outline:3px solid #28378E; outline-offset:2px; }
+
+.loop{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,480px); gap:32px;
+  padding:28px 28px 32px; align-items:start; }
+/* the ring stays in view while the panel beside it scrolls, so the reader
+   never loses which stage they are on */
+.ringwrap{ min-width:0; position:sticky; top:var(--gl-sticky-top,24px); }
+/* the toggle lives in the ring's empty top-left corner (it moves with the
+   sticky ring); .seg-above (set in JS) stacks it over the ring instead when
+   a stage circle would come too close */
+@media (min-width:861px){
+  .ringwrap > .seg{ position:absolute; top:0; left:0; z-index:2; }
+  .ringwrap > .seg button{ padding:10px 14px; }   /* a little narrower, to clear stage 01 */
+  .ringwrap.seg-above > .seg{ position:relative; margin-bottom:16px; }
+}
+
+/* ---------- ring ---------- */
+/* square, and never taller than the screen, so the sticky ring is always
+   seen whole (short laptop screens get a smaller ring, not a cropped one) */
+.ring{ position:relative; aspect-ratio:1/1; margin:0 auto;
+  width:min(100%, max(600px, calc(100svh - var(--gl-sticky-top,24px) - 80px))); }
+.arcs{ position:absolute; inset:0; width:100%; height:100%; overflow:visible; pointer-events:none; }
+.arc{ fill:none; stroke:#9FB0C8; stroke-width:.5; stroke-linecap:round; }
+.arrowhead{ fill:#9FB0C8; }
+.arrowhead.is-close{ fill:var(--gl-blue); }
+.arc.is-close{ stroke:var(--gl-blue); stroke-width:.55; stroke-dasharray:1.3 1.1; stroke-linecap:round; }
+.arc,.arrowhead{ transition:opacity .3s; }
+.arc.is-dim,.arrowhead.is-dim{ opacity:.35; }
+/* the loop's title in the middle: plain text, not a control */
+.hub{ position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:34%; text-align:center; pointer-events:none; }
+.hub__t{ margin:0; font-size:34px; line-height:1.1; letter-spacing:-.01em; font-weight:600; color:var(--gl-ink); }
+.hub__s{ margin:6px 0 0; font-size:15px; line-height:1.4; color:var(--gl-body); }
+.ring__note{ margin:4px 0 0; text-align:center; font-size:14px; color:var(--gl-body); }
+.ring__note[hidden]{ display:none; }
+
+
+/* stage circles - these ARE buttons, so they get the hover and the lift */
+.node{ position:absolute; left:var(--x); top:var(--y); transform:translate(-50%,-50%);
+  width:146px; height:146px; border-radius:50%; cursor:pointer; padding:10px;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; text-align:center;
+  background:color-mix(in srgb, var(--nc) 9%, #fff);
+  border:2px solid color-mix(in srgb, var(--nc) 40%, #fff);
+  color:var(--gl-ink);
+  transition:background .28s, border-color .28s, box-shadow .28s, transform .28s; }
+.node:hover{ border-color:var(--nc); box-shadow:0 10px 22px rgba(0,45,90,.14);
+  transform:translate(-50%,calc(-50% - 2px)); }
+.node:focus-visible{ outline:3px solid #28378E; outline-offset:4px; }
+.node__badge{ width:30px; height:30px; border-radius:50%; background:var(--nc); color:var(--nt);
+  display:flex; align-items:center; justify-content:center; font-size:13px; margin-bottom:2px; flex:none;
+  transition:background .28s, color .28s, filter .28s, opacity .28s; }
+.node__n{ font-size:12px; font-weight:700; color:var(--gl-body); line-height:1.2; transition:color .28s; }
+/* The label is held to the part of the circle wide enough for it. Long
+   names stack evenly ("Summative / Program / Assessments") rather than
+   keep a 125px-wide line that would reach the edge of a 146px circle. */
+.node__name{ font-size:13px; font-weight:600; line-height:1.15; color:var(--gl-ink); max-width:104px; transition:color .28s; }
+/* in the panel heading (and phone rows) the last two words stay together,
+   so no line ends with a single word */
+.d-name .nw2{ white-space:nowrap; }
+.node__tier{ font-size:12px; font-weight:600; color:var(--gl-body); margin-top:1px; white-space:nowrap; transition:color .28s; }
+.node__chev{ display:none; }
+
+/* Selected: the whole circle fills with its stage colour, so the active stage
+   is obvious at a glance. Every label colour on its fill passes AA: white on
+   blue 7.75, purple 6.24, cyan-deep 4.57, berry 4.75, green 4.68, orange
+   4.63; ink on gold 8.27. A light halo and a small scale carry it too. */
+.node.is-sel{ background:var(--nc); border-color:var(--nc);
+  box-shadow:0 0 0 5px color-mix(in srgb, var(--nc) 22%, #fff);
+  transform:translate(-50%,-50%) scale(1.06); }
+.node.is-sel:hover{ transform:translate(-50%,-50%) scale(1.06); box-shadow:0 0 0 5px color-mix(in srgb, var(--nc) 22%, #fff); }
+.node.is-sel .node__n,.node.is-sel .node__name,.node.is-sel .node__tier{ color:var(--nt); }
+.node.is-sel .node__badge{ background:rgba(255,255,255,.2); }
+.node--ink.is-sel .node__badge{ background:rgba(24,27,68,.12); }
+
+/* Stages 2 & 6 are only for Tier 2 & 3 students, so in the Tier 2 & 3 view
+   they get a dashed outer ring in their own colour - the same dash as the
+   loop's closing line - plus their "Tier 2 & 3" label. */
+.node--t23::after{ content:""; position:absolute; inset:-10px; border-radius:50%;
+  border:2px dashed var(--nc); pointer-events:none; opacity:0; transition:opacity .28s, inset .28s; }
+.node--t23.is-t23::after{ opacity:1; }
+.node--t23.is-t23.is-sel::after{ inset:-15px; }
+
+/* Tier 2 & 3 stages in the All-students view: strongly set back, but still
+   readable because they still work. Opacity is NOT used - it would drag the
+   label under 4.5:1. The face, border and badge fade; the text only drops to
+   grey (#767676 = 4.54:1, the lightest grey that passes AA on white). The
+   "Tier 2 & 3" label carries the state, so the pale border is decoration. */
+.node.is-out{ background:#fff; border:2px dashed #D3D7DF; box-shadow:none; }
+.node.is-out .node__badge{ filter:grayscale(1); opacity:.35; }
+.node.is-out .node__n,.node.is-out .node__name,.node.is-out .node__tier{ color:#767676; font-weight:500; }
+.node.is-out:hover{ border-color:var(--nc); }
+.node.is-out:hover .node__badge{ filter:none; opacity:1; }
+.node.is-out:hover .node__name{ color:var(--gl-ink); }
+
+/* ---------- detail panel (final.css .pillar--tint) ---------- */
+/* Stage colour marks which stage the panel belongs to (the stage badge, the
+   role badges, the row hover tint). Everything that can be clicked stays
+   Benchmark blue - the lighter stage colours are under 4.5:1 as text or
+   button colours. No accent bars. */
+.detail[hidden]{ display:none; }
+.detail{ min-width:0; scroll-margin-top:var(--gl-sticky-top,24px); background:var(--gl-tint); border-radius:var(--gl-radius); padding:28px 28px 26px; }
+.d-eyebrow{ margin:0 0 10px; font-size:12.5px; line-height:1.5; letter-spacing:1px; text-transform:uppercase;
+  font-weight:700; color:var(--gl-blue); }
+.d-title{ display:flex; align-items:center; gap:12px; }
+.d-badge{ width:40px; height:40px; border-radius:50%; background:var(--nc); color:var(--nt); flex:none;
+  display:flex; align-items:center; justify-content:center; font-size:17px; }
+.d-name:focus{ outline:none; }
+.d-name:focus-visible{ outline:3px solid #28378E; outline-offset:4px; border-radius:4px; }
+.d-name{ margin:0; font-size:26px; line-height:1.15; letter-spacing:-.01em; font-weight:600; color:var(--gl-ink); }
+.d-for{ margin:10px 0 0; font-size:14.5px; font-weight:600; color:var(--gl-ink); }
+.d-desc{ margin:6px 0 0; font-size:16px; line-height:1.6; color:var(--gl-body); }
+
+/* a link-style button (final.css .linkline): blue, bold, with its own icon */
+.d-video{ margin:16px 0 0; display:inline-flex; align-items:center; gap:10px; border:0; background:none; text-align:left;
+  padding:4px 0; cursor:pointer; font-size:15px; font-weight:700; color:var(--gl-blue); }
+.d-video__p{ width:32px; height:32px; border-radius:50%; background:var(--gl-blue); color:#fff; flex:none;
+  display:flex; align-items:center; justify-content:center; font-size:11px; padding-left:2px; transition:background .2s; }
+.d-video:hover{ text-decoration:underline; }
+.d-video:hover .d-video__p{ background:var(--gl-blue-hover); }
+
+/* section headings inside the panel: plain sentence case */
+.d-h3{ margin:26px 0 10px; font-size:17px; line-height:1.3; letter-spacing:-.01em; font-weight:600; color:var(--gl-ink); }
+/* plain text: an instruction, not a control */
+.d-hint{ margin:-4px 0 12px; font-size:14px; line-height:1.5; color:var(--gl-body); }
+
+.steps{ list-style:none; margin:0; padding:0; }
+.steps .who{ display:flex; align-items:center; gap:10px; margin:4px 0 6px; font-size:14.5px; font-weight:700; color:var(--gl-ink); }
+.who__ic{ width:28px; height:28px; border-radius:50%; background:var(--nc,var(--gl-blue)); color:var(--nt,#fff); flex:none;
+  display:flex; align-items:center; justify-content:center; font-size:13px; }
+/* not a link, so not blue */
+/* one divider only: the step row above already draws the line */
+.steps .hand{ margin:14px 0 8px; font-size:13.5px; font-weight:600; color:var(--gl-body); }
+.steps .step{ border-bottom:1px solid var(--gl-line); }
+/* the whole row is the button: it previews on hover and enlarges on select */
+.step__btn{ width:100%; display:grid; grid-template-columns:26px minmax(0,1fr) auto; gap:10px; align-items:baseline;
+  border:0; background:none; text-align:left; cursor:zoom-in; padding:9px 8px; margin:0 -8px; width:calc(100% + 16px);
+  border-radius:8px; color:inherit; transition:background .15s; }
+.step__btn:hover{ background:color-mix(in srgb, var(--nc,var(--gl-blue)) 8%, #fff); }
+.step__btn:hover .step__t{ color:var(--gl-blue); text-decoration:underline; text-underline-offset:3px; }
+.step__btn:focus-visible{ outline:3px solid #28378E; outline-offset:0;
+  background:color-mix(in srgb, var(--nc,var(--gl-blue)) 8%, #fff); }
+
+.steps .step:last-child{ border-bottom:0; }
+.step__btn .step__n{ font-variant-numeric:tabular-nums; }
+.step__n{ font-size:12.5px; font-weight:700; color:var(--gl-body); }
+.step__t{ font-size:15px; line-height:1.45; color:var(--gl-text); }
+.step__a{ font-size:13px; color:var(--gl-body); white-space:nowrap; }
+
+.linkbtn{ margin-top:10px; display:inline-flex; align-items:center; gap:8px; border:0; background:none;
+  padding:6px 0; cursor:pointer; font-size:15px; font-weight:700; color:var(--gl-blue); }
+.linkbtn i{ font-size:12px; }
+.linkbtn:hover{ text-decoration:underline; }
+
+.branch{ list-style:none; margin:0; padding:0; }
+.branch li{ display:grid; grid-template-columns:minmax(0,1fr) 18px minmax(0,1.1fr); gap:12px; align-items:baseline;
+  padding:9px 0; border-bottom:1px solid var(--gl-line); }
+.branch li:last-child{ border-bottom:0; }
+.branch__if{ font-size:15px; line-height:1.45; color:var(--gl-body); }
+.branch__arrow{ font-size:13px; color:var(--gl-blue); }
+.branch__then{ font-size:15px; line-height:1.45; font-weight:600; color:var(--gl-ink); }
+.branch__then a{ color:var(--gl-blue); text-decoration:underline; }
+
+.pm{ width:100%; border-collapse:collapse; font-size:14.5px; table-layout:fixed; }
+.pm col:first-child,.pm th:first-child{ width:38%; }
+.pm th,.pm td{ text-align:left; vertical-align:top; padding:9px 8px; border-bottom:1px solid var(--gl-line); }
+.pm thead th{ font-size:14.5px; font-weight:700; color:var(--gl-ink); }
+.pm thead th span{ display:block; font-size:12.5px; font-weight:500; color:var(--gl-body); }
+.pm tbody tr:last-child th,.pm tbody tr:last-child td{ border-bottom:0; }
+.pm tbody th{ font-weight:500; color:var(--gl-body); }
+.pm td{ color:var(--gl-ink); font-weight:600; }
+
+/* stage-to-stage navigation: next is the primary action (final.css .btn),
+   previous the secondary one (final.css .btn-ghost) */
+/* always side by side: each takes half, and a long stage name wraps inside
+   its button instead of pushing the buttons onto two rows */
+.pager{ display:flex; gap:12px; margin-top:26px; }
+.pager .btn,.pager .btn-ghost{ flex:1 1 0; min-width:0; justify-content:center; text-align:center;
+  line-height:1.3; min-height:52px; padding:10px 14px; gap:8px; }
+.pager .btn > span,.pager .btn-ghost > span{ min-width:0; }
+.pager .pg-full{ text-wrap:balance; }      /* even lines when a name wraps */
+.pg-short{ display:none; }
+.btn{ display:inline-flex; align-items:center; gap:10px; border:0; cursor:pointer; background:var(--gl-blue);
+  color:#fff; font-weight:700; font-size:15px; letter-spacing:.2px; line-height:24px; padding:12px 22px;
+  border-radius:8px; transition:background .2s,transform .2s,box-shadow .2s; }
+.btn:hover{ background:var(--gl-blue-hover); transform:translateY(-1px); box-shadow:0 8px 18px rgba(0,83,155,.25); }
+.btn-ghost{ display:inline-flex; align-items:center; gap:10px; cursor:pointer; background:#fff;
+  border:1px solid #858B97; border-radius:5px; padding:11px 18px; color:var(--gl-blue);   /* border 3.5:1 */
+  font-weight:700; font-size:15px; line-height:24px; transition:background .2s,border-color .2s; }
+.btn-ghost:hover{ background:#F0F5FB; border-color:var(--gl-blue); }
+.btn:focus-visible,.btn-ghost:focus-visible,.d-video:focus-visible,.linkbtn:focus-visible{ outline:3px solid #28378E; outline-offset:3px; }
+
+/* new stage: the panel's content eases up into place */
+@keyframes gl-in{ from{ opacity:0; transform:translateY(6px); } to{ opacity:1; transform:none; } }
+.detail.is-in .d-scroll > *{ animation:gl-in .26s ease-out both; }
+
+/* ---------- floating card: stage tooltip + step preview ---------- */
+.pop{ position:absolute; z-index:60; max-width:340px; background:#fff; color:var(--gl-ink);
+  border:1px solid var(--gl-line); border-radius:12px; padding:12px 14px;
+  box-shadow:0 14px 34px rgba(0,45,90,.18), 0 2px 6px rgba(0,45,90,.08); }
+.pop[hidden]{ display:none; }
+.pop__h{ margin:0; font-size:14.5px; line-height:1.4; font-weight:700; color:var(--gl-ink); }
+.pop__p{ margin:4px 0 0; font-size:14px; line-height:1.45; color:var(--gl-text); }
+.pop__shot{ width:312px; aspect-ratio:218/112; margin:-2px -2px 10px; border-radius:8px; overflow:hidden;
+  background:var(--gl-tint); border:1px solid var(--gl-line); display:flex; align-items:center; justify-content:center; }
+.pop__shot img,.pop__shot .ph{ width:100%; height:100%; object-fit:cover; display:block; }
+.pop__shot{ aspect-ratio:1280/656; }
+.pop__none{ display:flex; flex-direction:column; align-items:center; gap:6px; font-size:13.5px; color:var(--gl-body); }
+.pop__none i{ font-size:22px; color:#9FB0C8; }
+.pop__none--lg{ font-size:15px; padding:60px 0; }
+
+/* ---------- screenshot lightbox ---------- */
+.shot{ width:min(1180px,94vw); }
+.shot .vmodal__head{ align-items:flex-start; }
+.shot__meta{ margin:4px 0 0; font-size:14px; color:var(--gl-body); }
+.shot__fig{ background:var(--gl-tint); display:flex; align-items:center; justify-content:center; min-height:200px; }
+.shot__fig img{ display:block; max-width:100%; max-height:72vh; width:auto; height:auto; }
+/* the placeholder fills the frame at the real screenshots' proportions */
+.shot__ph{ width:min(100%, calc(72vh * 1280 / 656)); }
+.shot__ph .ph{ display:block; width:100%; height:auto; }
+.shot__foot{ display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px 16px;
+  border-top:1px solid var(--gl-line); }
+.shot__count{ font-size:14px; color:var(--gl-body); }
+.shot__foot .btn-ghost:disabled{ opacity:.45; cursor:default; }
+.shot__foot .btn-ghost:disabled:hover{ background:#fff; border-color:#858B97; }
+
+/* ---------- video dialog ---------- */
+.vmodal{ border:0; border-radius:16px; padding:0; width:min(900px,92vw); background:#fff; }
+.vmodal::backdrop{ background:rgba(10,16,40,.66); }
+.vmodal__head{ display:flex; align-items:center; justify-content:space-between; gap:16px;
+  padding:14px 16px; border-bottom:1px solid var(--gl-line); }
+.vmodal__head h2{ font-size:17px; margin:0; color:var(--gl-ink); }
+.vmodal__close{ border:0; background:transparent; cursor:pointer; font-size:18px; color:var(--gl-body); width:40px; height:40px; }
+.vmodal__frame{ position:relative; aspect-ratio:16/9; background:#000; }
+.vmodal__frame iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+
+.loopback{ display:none; }
+
+@media (prefers-reduced-motion:reduce){
+  .node,.btn,.btn-ghost,.d-video__p,.node__badge,.node__n,.node__name,.node__tier,.node--t23::after,.arc,.arrowhead{ transition:none; }
+  .detail.is-in .d-scroll > *{ animation:none; }
+  .node:hover{ transform:translate(-50%,-50%); }
+  .btn:hover{ transform:none; }
+}
+
+.d-body{ display:contents; }
+.d-bar{ display:none; }
+
+/* ---------- side by side (1240px and up) ----------
+   The panel is as tall as the ring (--gl-panel-h, set in JS). Its content
+   scrolls; Previous / Next stay pinned at the bottom, level with the bottom
+   of the stage circles, so they are always in view. */
+@media (min-width:1240px){
+  .detail{ position:relative; display:flex; flex-direction:column; height:var(--gl-panel-h,auto); padding:0; }
+  /* scrolled down: the text fades out under the top edge instead of being cut */
+  .detail::before{ content:""; position:absolute; z-index:1; top:0; left:28px; right:28px; height:28px; pointer-events:none;
+    background:linear-gradient(var(--gl-tint), rgba(244,247,251,0)); opacity:0; transition:opacity .2s; }
+  .detail.is-scrolled::before{ opacity:1; }
+  .d-body{ position:relative; flex:1 1 auto; min-height:0; display:flex; flex-direction:column; }
+  /* the panel scrolls like any page area (wheel, trackpad, swipe, keys); at
+     its end the scroll carries on to the page. The browser's own bar is
+     hidden in favour of the always-visible one below (.d-bar). */
+  .d-scroll{ flex:1 1 auto; min-height:0; overflow-y:auto; padding:28px 28px 10px; scrollbar-width:none; }
+  .d-scroll::-webkit-scrollbar{ display:none; }
+  /* scrollbar: a faint track and a soft grey thumb that darkens on hover /
+     drag, in a 16px-wide strip that is easy to grab. It shows only while the
+     pointer is over the card, while the card is scrolling, or when a keyboard
+     user is inside it; the fades above / below the text still say there is
+     more. The bar is an extra: wheel, trackpad, swipe and keys all scroll. */
+  .detail.is-scroll .d-bar{ display:block; position:absolute; top:28px; bottom:12px; right:4px; width:16px;
+    cursor:pointer; touch-action:none; user-select:none; -webkit-user-select:none;
+    opacity:0; transition:opacity .2s; }
+  .detail.is-scroll:hover .d-bar,.detail.is-scrolling .d-bar,.detail:has(:focus-visible) .d-bar,
+  .d-bar.is-drag{ opacity:1; }
+  .d-bar::before{ content:""; position:absolute; top:0; bottom:0; left:5px; width:6px; border-radius:3px; background:#E9ECF1; }
+  .d-thumb{ position:absolute; top:0; left:0; width:16px; height:36px; cursor:grab; outline:0; }
+  .d-thumb::before{ content:""; position:absolute; inset:0 5px; border-radius:3px; background:#C3C8D1; transition:background .15s; }
+  .d-bar:hover .d-thumb::before,.d-bar.is-drag .d-thumb::before{ background:#9AA0AB; }
+  .d-bar.is-drag .d-thumb{ cursor:grabbing; }
+  /* keyboard only: a thin ring, as on the other controls */
+  .d-thumb:focus-visible::before{ outline:2px solid #28378E; outline-offset:2px; }
+  .pager{ position:relative; flex:none; margin:0 28px; padding:16px 0 24px;
+    border-top:1px solid transparent; transition:border-color .2s; }
+  .detail.is-scroll .pager{ border-top-color:var(--gl-line); }
+  /* more to read below: the text fades out just above the buttons */
+  .pager::before{ content:""; position:absolute; left:0; right:0; bottom:calc(100% + 1px); height:36px; pointer-events:none;
+    background:linear-gradient(rgba(244,247,251,0), var(--gl-tint)); opacity:0; transition:opacity .2s; }
+  .detail.has-more .pager::before{ opacity:1; }
+}
+@media (min-width:1240px) and (prefers-reduced-motion:reduce){
+  .pager,.pager::before,.detail::before,.d-thumb::before,.d-bar{ transition:none; }
+}
+
+/* ---------- 1240-1439px: still side by side ----------
+   Narrower page margins and panel give the ring column 616-780px. */
+@media (max-width:1439px){
+  .a-shell{ padding:0 40px; }
+  .loop{ grid-template-columns:minmax(0,1fr) minmax(0,420px); gap:28px; }
+}
+/* ---------- below 1240px: ring above, panel below ----------
+   Side by side the ring column would drop under ~650px and the stage
+   circles would crowd; stacked, the ring keeps up to 720px. */
+@media (max-width:1239px){
+  .loop{ grid-template-columns:1fr; }
+  .ringwrap{ position:relative; top:auto; }
+  .ring{ width:100%; max-width:720px; margin:0 auto; }
+  .detail{ width:100%; max-width:860px; margin:0 auto; }
+}
+@media (max-width:1200px){
+  .a-motif{ opacity:.06; }
+}
+
+/* ---------- phone: the ring becomes a list, each stage opens in place ---------- */
+@media (max-width:860px){
+  .a-top{ display:block; }
+  .a-motif{ display:none; }
+  .a-band{ padding:40px 0; }
+  .a-shell{ padding:0 16px; }
+  .a-h2{ font-size:30px; line-height:1.12; }
+  .a-sub{ font-size:18px; margin-top:12px; }
+  .a-lede{ font-size:16px; margin-top:14px; }
+  .tool{ margin-top:24px; }
+  .seg{ display:flex; width:100%; margin-bottom:12px; }
+  .seg button{ flex:1 1 0; min-width:0; text-align:center; padding:12px 6px; font-size:14px; min-height:44px; }
+
+  .loop{ display:block; padding:14px; }
+  .ring{ aspect-ratio:auto; width:100%; max-width:none; display:flex; flex-direction:column; gap:10px; }
+  .arcs,.hub{ display:none; }
+  .ring__note{ margin-top:10px; text-align:left; }
+  .node{ position:static; transform:none; width:100%; height:auto; min-height:60px; border-radius:12px;
+    display:grid; grid-template-columns:32px 22px minmax(0,1fr) 16px; column-gap:12px; row-gap:0;
+    grid-template-areas:"b n name c" "b n tier c"; align-items:center; text-align:left; padding:12px 14px; }
+  .node__badge{ grid-area:b; } .node__n{ grid-area:n; } .node__name{ grid-area:name; }
+  .node__tier{ grid-area:tier; } .node__chev{ grid-area:c; }
+  .node:hover{ transform:none; box-shadow:none; }
+  .node__badge{ margin:0; width:32px; height:32px; font-size:14px; }
+  .node__n{ font-size:13px; min-width:20px; }
+  .node__name{ font-size:15.5px; }
+  .node__tier{ margin:0; }
+  /* the chevron says "this opens", which a plain row would not */
+  .node__chev{ display:block; font-size:13px; color:var(--gl-body); transition:transform .2s; }
+  .node.is-sel,.node.is-sel:hover{ transform:none;
+    box-shadow:0 0 0 3px color-mix(in srgb, var(--nc) 22%, #fff); }
+  .node.is-sel .node__chev{ transform:rotate(180deg); color:var(--nt); }
+  .node--t23::after{ display:none; }
+  .node.is-t23{ border-style:dashed; }
+  .node__name{ max-width:none; }
+  .node__name .nw2{ white-space:nowrap; }
+
+  .detail{ margin:2px 0 4px; padding:20px 16px; }
+  .d-name{ font-size:22px; }
+  .step__btn{ grid-template-columns:26px minmax(0,1fr); cursor:pointer; }
+  .step__a{ grid-column:2; grid-row:2; white-space:normal; font-size:12.5px; }
+  .shot__foot .btn-ghost{ padding:10px 12px; font-size:14px; }
+  .branch li{ grid-template-columns:minmax(0,1fr); gap:2px; }
+  .branch__arrow{ display:none; }
+  .branch__then::before{ content:"\2192\00a0"; color:var(--gl-blue); }
+  .d-video,.linkbtn{ min-height:44px; }
+  .pager .btn,.pager .btn-ghost{ padding:10px 12px; font-size:15px; gap:8px; }
+  .pg-short{ display:inline; }
+  /* the stage name is still read out, just not shown */
+  .pg-full{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden;
+    clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+
+  .loopback{ display:flex; justify-content:center; width:100%; min-height:48px; margin-top:10px; }
+}
