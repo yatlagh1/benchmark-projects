@@ -2336,9 +2336,10 @@ h2 .aa-head {
   align-self: stretch;
   flex: 0 0 200px;
   width: 200px;
-  height: 72px;
+  min-height: 72px;
   margin: -10px -30px -10px auto;
-  background: url('../images/crossling_header_pattern.png') no-repeat center / 200px 72px;
+  /* repeats downward when the header wraps onto more lines */
+  background: url('../images/crossling_header_pattern.png') repeat-y center top / 200px 72px;
 }
 
 .crossling-pattern::after {
@@ -2355,18 +2356,37 @@ h2 .aa-head {
   overflow: hidden;
 }
 
-.top-sequence-wrap:has(.crossling-pattern) .lesson-time-bg {
+.top-sequence-wrap:has(.crossling-pattern) .lesson-time-bg,
+.top-sequence-wrap:has(.crossling-pattern) .sequence-left {
   position: relative;
   z-index: 1;
 }
 
-/* The pattern is a fixed 72px strip; when the header wraps onto more lines
-   (under 1200px) it would sit only at the top, so it is hidden there. */
-@media (max-width: 1199.98px) {
+/* Phones and small tablets: narrower pattern (same proportions) so the lesson text keeps its room */
+@media (max-width: 768px) {
   .crossling-pattern {
-    display: none;
+    flex-basis: 90px;
+    width: 90px;
+    background-size: 90px auto;
   }
 }
+
+@media (max-width: 480px) {
+  .crossling-pattern {
+    flex-basis: 60px;
+    width: 60px;
+    background-size: 60px auto;
+  }
+}
+
+@media (max-width: 374.98px) {
+  .crossling-pattern {
+    flex-basis: 30px;
+    width: 30px;
+    background-size: 30px auto;
+  }
+}
+
 
 /* Lesson body spacing and links, per Figma */
 @media (min-width: 992px) {
