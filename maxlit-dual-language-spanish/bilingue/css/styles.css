@@ -2339,7 +2339,7 @@ h2 .aa-head {
   min-height: 72px;
   margin: -10px -30px -10px auto;
   /* repeats downward when the header wraps onto more lines */
-  background: url('../images/crossling_header_pattern.png') repeat-y center top / 200px 72px;
+  background: url('../images/crossling_header_pattern.png') repeat-y center top / 200px auto;
 }
 
 .crossling-pattern::after {
