@@ -2389,7 +2389,9 @@ h2 .aa-head {
 
 
 /* Lesson body spacing and links, per Figma */
-@media (min-width: 992px) {
+/* Title may use the 70px column gap (one line, as in Figma); the template
+   only has a 70px gap from 1440px, below that it would run under the rail. */
+@media (min-width: 1440px) {
   .lang-es .lesson-content h1,
   .lang-en .lesson-content h1 {
     margin-right: -70px;
