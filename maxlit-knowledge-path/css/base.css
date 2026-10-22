@@ -133,7 +133,7 @@ body{
 img{max-width:100%;display:block;}
 a{color:var(--text-link);text-decoration:none;}
 a:hover{color:var(--indigo);}
-:focus-visible{outline:3px solid var(--orange);outline-offset:3px;}
+:focus-visible{outline:3px solid var(--indigo);outline-offset:3px;}   /* was --orange; every component rule uses indigo */
 
 h1,h2,h3,h4,h5{margin:0;color:var(--ink);font-weight:600;letter-spacing:-.03em;line-height:1.05;text-wrap:balance;}
 p{margin:0;}

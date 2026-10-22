@@ -15,7 +15,7 @@ const G6=[{t:"Great Advances: From Earth to Mars",from:0},{t:"Ancient Civilizati
 const UNITS=["Ways of Learning","The Living World","Learning Through Stories","Voices Past and Present",
   "Living on a Changing Earth","People and Communities","Forces, Energy, and Matter","Making Choices"];
 const TOPICS={
- TK:["Time For School","Living Things","Familiar Friends","Our Community","Earth and Sky","Healthy and Safe","We Are Scientists","Maximize Your Strengths"],
+ TK:["Time for School","Living Things","Familiar Friends","Our Community","Earth and Sky","Healthy and Safe","We Are Scientists","Maximize Your Strengths"],
  K:["Let’s Go to School","Living Things Have Needs","Stories Tell Us About Ourselves","Looking at the Past","Watching the Weather","Rules at Home and School","Forces: Pushes and Pulls","People at Work"],
  "1":["Let’s Discover Together","Living Things Grow and Survive","Community Adventures","Past and Present","Patterns in the Sky","We Are a Part of a Community","Energy: Sound Waves","Goods and Services"],
  "2":["Let’s Share Ideas","Living Things and Their Habitats","Traditional Tales","People Who Made a Difference","Wind and Water","We Can Participate in Government","Matter: States and Changes","Growers, Buyers, and Sellers"],
@@ -25,12 +25,23 @@ const TOPICS={
  "6":null   /* tk — Grade 6 not yet in the chart */
 };
 /* knowledge path statements (deck slide 7, second chart). TK and 6 are tk. */
-const PATH={TK:null,K:"… living things have basic needs for survival…","1":"…living things use parts to survive, care for their young",
- "2":"…how traits enable living things to survive …","3":"…living things use inherited traits and senses to stay alive",
- "4":"Living things use their senses...in order to survive.","5":"…organisms use their senses to survive","6":null};
+const PATH={TK:null,
+ K:"Living things have basic needs for survival (LS1-1, ESS3-1)",
+ "1":"Living things rely on other things in their habitat for survival (LS1-1, LS1-2, LS3-1)",
+ "2":"Living things use part and behaviors to care for their young (LS2-1, LS2-2, LS4-1)",
+ "3":"Living things have inherited and behavioral traits dependent on and associated with their habitat (LS2-1, LS3-1, LS3-2)",
+ "4":"Living things use senses and interact with others for survival (LS1-1, LS1-2)",
+ "5":"Living things rely on the balanced ecosystem to survive (LS2-1, PS3-1, LS1-1, ESS3-1)",
+ "6":null};
 const PATH_UNIT=1; /* Unit 2 */
+/* Grade 6 covers only four units (see G6.from), so its topic is looked up
+   separately. Returns null when a grade has no topic for that unit. */
+function topicFor(g,u){
+  if(g==='6'){const o=G6.find(x=>x.from===u); return o?o.t:null;}
+  return (TOPICS[g]&&TOPICS[g][u])||null;
+}
 /* Unit 2 MAX Book covers (assets/covers). TK and Grade 6 still to come. */
-const COVER={K:"unit2-gK-living-things-have-needs.jpg","1":"unit2-g1-living-things-grow-and-survive.jpg",
+const COVER={TK:"unit2-gTK-living-things.jpg",K:"unit2-gK-living-things-have-needs.jpg","1":"unit2-g1-living-things-grow-and-survive.jpg",
  "2":"unit2-g2-living-things-and-their-habitats.jpg","3":"unit2-g3-living-things-and-their-traits.jpg",
  "4":"unit2-g4-living-things-and-their-senses.jpg","5":"unit2-g5-living-things-and-their-interactions.jpg"};
 const coverSrc=g=>COVER[g]?"assets/covers/"+COVER[g]:null;
@@ -42,8 +53,8 @@ const INTRO={
  "2":["In this unit, students will build on their prior knowledge about how living things grow and survive to learn about how living things within a habitat depend on each other.",
       "Students will read about plants and animals that live and interact in different habitats, such as a redwood forest, meadow, and ocean. They will further discover the important role each living thing plays within a habitat, and how the removal of one can threaten others."],
  "3":["In this unit, your students will build on their prior knowledge to focus on the unique physical and behavioral traits that animal species pass down, from one generation to the next, which enable them to survive and thrive in their habitats."],
- "4":["In this unit, students will build on their prior knowledge to focus on how living things use their senses—including sight, sound/hearing, touch, taste, and smell—to gather information, send and receive signals, guide their actions, and learn from other living and non-living things in their ecosystems."],
- "5":["In this unit, students will build on their knowledge of living things and habitats to focus on how the three main categories of living things—producers, consumers, and decomposers—move energy, interact, and are interdependent within food webs and ecosystems. Students will also study the hazards posed by an ecosystem out of balance."]
+ "4":["In this unit, students will build on their prior knowledge to focus on how living things use their senses – including sight, sound/hearing, touch, taste, and smell – to gather information, send and receive signals, guide their actions, and learn from other living and non-living things in their ecosystems."],
+ "5":["In this unit, students will build on their knowledge of living things and habitats to focus on how the three main categories of living things – producers, consumers, and decomposers – move energy, interact, and are interdependent within food webs and ecosystems. Students will also study the hazards posed by an ecosystem out of balance."]
 };
 /* Essential Questions, Knowledge Goals and Enduring Understandings per grade:
    MAXLiteracy California c2028 Teacher's Edition, Unit 2 > Unit Overview > Knowledge Path (Benchmark Universe), Grades K-5.
@@ -123,7 +134,9 @@ GRADES.forEach(g=>{
 grid.innerHTML=html;
 grid.addEventListener('click',e=>{
   if(e.target.closest('#detail'))return;
-  const h=e.target.closest('.u-head'); if(h){const u=+h.dataset.u; setUnit(selUnit===u?null:u); return;}
+  const h=e.target.closest('.u-head'); if(h){const u=+h.dataset.u;
+    if(selGrade==='6') selGrade=null;
+    setUnit(selUnit===u?null:u); return;}
   const b=e.target.closest('.g-badge'); if(b){setGrade(selGrade===b.dataset.row?null:b.dataset.row); return;}
   const c=e.target.closest('.cell'); if(c&&c.dataset.row==='6'){setGrade(selGrade==='6'?null:'6');return;}
   if(c){selCell=selCell&&selCell.g===c.dataset.row&&selCell.u===+c.dataset.u?null:{g:c.dataset.row,u:+c.dataset.u}; render();}
@@ -132,7 +145,7 @@ grid.addEventListener('mouseover',e=>{const c=e.target.closest('.cell');grid.cla
   grid.querySelectorAll('.cell').forEach(x=>x.classList.toggle('is-x',!!c&&(x.dataset.row===c.dataset.row||x.dataset.u===c.dataset.u)));});
 grid.addEventListener('mouseleave',()=>grid.classList.remove('hov'));
 
-function setGrade(g){selGrade=g;selCell=null;render();renderPath(g&&PATH[g]!==undefined?GRADES.indexOf(g):null);}
+function setGrade(g){selGrade=g;selCell=null;if(g==='6')selUnit=null;render();renderPath(g&&PATH[g]!==undefined?GRADES.indexOf(g):0);}
 function setUnit(u){selUnit=u;selCell=null;render();}
 
 function render(){
@@ -184,16 +197,15 @@ document.getElementById('mlist').addEventListener('click',e=>{const b=e.target.c
 /* detail: the chosen topic, with the same unit one grade before and after */
 function renderDetail(){
   const d=document.getElementById('detail');
-  grid.querySelectorAll('.cell.is-adj').forEach(c=>c.classList.remove('is-adj'));
   if(!selCell){d.hidden=true;d.innerHTML='';grid.style.marginBottom='';return;}
   d.hidden=false;
   const {g,u}=selCell, i=GRADES.indexOf(g), t=TOPICS[g]?TOPICS[g][u]:'Topic tk';
-  const step=(gg,lab)=>gg?`<div class="d-step" data-g="${gg}"><small>${gName(gg)}</small>${TOPICS[gg]?TOPICS[gg][u]:'Topic tk'}</div>`:'';
-  [GRADES[i-1],GRADES[i+1]].forEach(gg=>{if(gg){const c=grid.querySelector(`.cell[data-row="${gg}"][data-u="${u}"]`);if(c)c.classList.add('is-adj');}});
+  const step=gg=>{const tt=gg?topicFor(gg,u):null; return tt?`<div class="d-step" data-g="${gg}"><small>${gName(gg)}</small>${tt}</div>`:'';};
+  const nextG=GRADES[i+1], hasNext=!!(nextG&&topicFor(nextG,u));
   d.innerHTML=`<div class="d-top"><span class="d-grade" data-g="${g}">${gName(g)}</span><button type="button" class="d-close" aria-label="Close topic details"><i class="fa-solid fa-xmark"></i></button></div>
     ${u===PATH_UNIT&&coverSrc(g)?`<div class="d-art"><img class="d-cover" src="${coverSrc(g)}" alt="Book cover: ${t}"><img class="d-bird" src="assets/max-bird-swoosh.png" alt="" aria-hidden="true"></div>`:''}
     <div><div class="d-topic">${t}</div><div class="d-unit">Unit ${u+1} · ${UNITS[u]}</div></div>
-    <div class="d-steps">${step(GRADES[i-1],'')}${i>0&&i<GRADES.length-1?'<i class="fa-solid fa-arrow-right"></i>':''}${step(GRADES[i+1],'')}</div>
+    <div class="d-steps">${step(GRADES[i])}${hasNext?'<i class="fa-solid fa-arrow-right"></i>':''}${step(nextG)}</div>
     <button class="btn-path" data-go="path" ${u===PATH_UNIT?'':'hidden'}>Knowledge path</button>`;
   placeDetail();
 }
@@ -223,23 +235,31 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&selCell&&!document.
 document.getElementById('detail').addEventListener('click',e=>{
   if(e.target.closest('.d-close')){const u=selCell.u,g=selCell.g;selCell=null;render();const c=grid.querySelector(`.cell[data-row="${g}"][data-u="${u}"]`);if(c&&mqDesk.matches)c.focus();return;}
   const b=e.target.closest('[data-go]');if(b){
-  const g=selCell&&selCell.u===PATH_UNIT?selCell.g:(selGrade||'K'); show('path'); renderPath(GRADES.indexOf(g));}});
+  const g=selCell&&selCell.u===PATH_UNIT?selCell.g:(selGrade||'TK'); show('path'); renderPath(GRADES.indexOf(g));}});
 
 /* ---------- view switching ---------- */
 function show(v){
   setTimeout(()=>{if(v==='grid')render();else if(cur>=0)chips.querySelectorAll('.chip').forEach(b=>b.setAttribute('aria-pressed',b.dataset.chip===GRADES[cur]));});
 document.querySelectorAll('.seg button').forEach(b=>{const on=b.dataset.view===v;b.setAttribute('aria-selected',on);b.tabIndex=on?0:-1;});
-  document.getElementById('view-grid').classList.toggle('is-on',v==='grid');document.getElementById('view-path').classList.toggle('is-on',v==='path');}
+  document.getElementById('view-grid').classList.toggle('is-on',v==='grid');document.getElementById('view-path').classList.toggle('is-on',v==='path');
+  chips.classList.toggle('chips--path',v==='path');   /* TK, 6 and All are not on the path */
+  if(v==='path'&&(selGrade==='TK'||selGrade==='6')) setGrade(null);}
 /* arrow keys move between the two tabs */
 document.querySelector('.seg').addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;
   e.preventDefault();const tabs=[...document.querySelectorAll('.seg button')];const i=tabs.indexOf(document.activeElement);
   const n=e.key==='Home'?0:e.key==='End'?tabs.length-1:(i+(e.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length;tabs[n].focus();tabs[n].click();});
-document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>{show(b.dataset.view);if(b.dataset.view==='path')renderPath(cur<0?1:cur);}));
+document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>{show(b.dataset.view);if(b.dataset.view==='path')renderPath(cur<0?0:cur);}));
 
 /* ---------- view 2: knowledge path ---------- */
 const stairs=document.getElementById('stairs'); let cur=-1, timer=null;
-stairs.innerHTML=GRADES.map((g,i)=>`<button title="${gName(g)}" aria-label="${gName(g)}: ${TOPICS[g]?TOPICS[g][PATH_UNIT]:'title to come'}" class="stair" data-g="${g}" data-i="${i}">
+/* TK and Grade 6 have no knowledge-path content yet, so the path shows K-5.
+   The grid still shows every grade. PATH_IDX holds GRADES indices. */
+const PATH_SKIP=new Set(['TK','6']);
+const PATH_IDX=GRADES.map((g,i)=>i).filter(i=>!PATH_SKIP.has(GRADES[i]));
+const PATH_FROM=PATH_IDX[0], PATH_LAST=PATH_IDX[PATH_IDX.length-1];
+stairs.innerHTML=GRADES.map((g,i)=>PATH_SKIP.has(g)?'':`<button title="${gName(g)}" aria-label="${gName(g)}: ${TOPICS[g]?TOPICS[g][PATH_UNIT]:'title to come'}" class="stair" data-g="${g}" data-i="${i}">
   <span class="cover ${coverSrc(g)?'cover--img':''}">${coverSrc(g)?`<img src="${coverSrc(g)}" alt="">`:'<i class="fa-solid fa-book"></i>'}</span></button>`).join('');
+stairs.style.setProperty('--steps', stairs.querySelectorAll('.stair').length || 8);
 /* after picking a grade, bring its details (grade card + Essential Question) into view */
 function revealPath(){
   const body=document.querySelector('.path__body'), r=body.getBoundingClientRect();
@@ -249,11 +269,16 @@ function revealPath(){
 }
 stairs.addEventListener('click',e=>{const s=e.target.closest('.stair');if(s){stop();renderPath(+s.dataset.i);revealPath();}});
 function renderPath(i){
-  if(i==null||i<0)return; cur=i; const g=GRADES[i];
+  if(i==null||i<0)return;
+  if(PATH_SKIP.has(GRADES[i])) i=PATH_IDX.find(j=>j>i);      /* never land on TK or 6 */
+  if(i==null) i=PATH_FROM;
+  cur=i; const g=GRADES[i];
   /* in the Knowledge path view the grade bar follows the chosen book; the grid keeps its own filter (default: All) */
   if(document.getElementById('view-path').classList.contains('is-on'))chips.querySelectorAll('.chip').forEach(b=>b.setAttribute('aria-pressed',b.dataset.chip===g));
-  {const cs=stairs.querySelectorAll('.stair')[i];if(cs&&stairs.scrollWidth>stairs.clientWidth)stairs.scrollTo({left:cs.offsetLeft-stairs.clientWidth/2+cs.offsetWidth/2,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});}
-  stairs.querySelectorAll('.stair').forEach((s,j)=>{s.classList.toggle('is-built',j<=i);s.classList.toggle('is-cur',j===i);j===i?s.setAttribute('aria-current','step'):s.removeAttribute('aria-current');});
+  {const cs=stairs.querySelector('.stair[data-i="'+i+'"]');if(cs&&stairs.scrollWidth>stairs.clientWidth)stairs.scrollTo({left:cs.offsetLeft-stairs.clientWidth/2+cs.offsetWidth/2,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});}
+  stairs.querySelectorAll('.stair').forEach(s=>{const j=+s.dataset.i;
+    s.classList.toggle('is-built',j<=i);s.classList.toggle('is-cur',j===i);
+    j===i?s.setAttribute('aria-current','step'):s.removeAttribute('aria-current');});
   renderEQ(g);
   const st=document.getElementById('stmt'); st.dataset.g=g; st.classList.toggle('stmt--tk',!PATH[g]);
   const book=TOPICS[g]?TOPICS[g][PATH_UNIT]:'Title tk';
@@ -266,12 +291,15 @@ function renderPath(i){
     ${BRIDGE[g]?`<div class="bridge"><i class="fa-solid fa-arrow-trend-up" aria-hidden="true"></i><div><b>Prior knowledge from grade to grade</b>${BRIDGE[g]}</div></div>`:''}</div>`;
 }
 function stop(){clearInterval(timer);timer=null;const p=document.getElementById('pPlay');p.innerHTML='<i class="fa-solid fa-play" aria-hidden="true"></i><span>Play</span>';p.setAttribute('aria-pressed','false');}
-document.getElementById('pPrev').onclick=()=>{stop();renderPath(Math.max(0,cur-1));};
-document.getElementById('pNext').onclick=()=>{stop();renderPath(Math.min(GRADES.length-1,cur+1));};
+document.getElementById('pPrev').onclick=()=>{stop();
+  const k=PATH_IDX.indexOf(cur); renderPath(PATH_IDX[Math.max(0,k-1)]);};
+document.getElementById('pNext').onclick=()=>{stop();
+  const k=PATH_IDX.indexOf(cur); renderPath(PATH_IDX[Math.min(PATH_IDX.length-1,k+1)]);};
 document.getElementById('pPlay').onclick=function(){
   if(timer){stop();return;}
   this.innerHTML='<i class="fa-solid fa-pause" aria-hidden="true"></i><span>Pause</span>';this.setAttribute('aria-pressed','true');
-  let i=0; renderPath(i); timer=setInterval(()=>{i++; if(i>=GRADES.length){stop();return;} renderPath(i);},1600);
+  let k=0; renderPath(PATH_IDX[k]);
+  timer=setInterval(()=>{k++; if(k>=PATH_IDX.length){stop();return;} renderPath(PATH_IDX[k]);},1600);
 };
 
 /* every Font Awesome glyph is decorative: text or aria-label carries the meaning */
@@ -280,9 +308,12 @@ new MutationObserver(()=>a11yIcons(document.body)).observe(document.body,{childL
 /* video pop-up */
 (function(){
   const dlg=document.getElementById('vmodal'),fr=document.getElementById('vidFrame'),open=document.getElementById('vidOpen');
-  open.addEventListener('click',()=>{stop();fr.src=fr.dataset.src;dlg.showModal();document.getElementById('vidClose').focus();});
+  open.addEventListener('click',()=>{stop();
+    /* embedded in the landing page: let the page open its own full-screen pop-up, like its other videos */
+    if(document.documentElement.classList.contains('is-embed')&&parent!==window){const id=(fr.dataset.src.match(/iframe\/([a-z0-9]+)/)||[])[1];if(id){parent.postMessage({maxlitVideo:id,label:'Gina Cervetti video'},'*');return;}}
+    fr.src=fr.dataset.src;dlg.showModal();document.getElementById('vidClose').focus();});
   document.getElementById('vidClose').addEventListener('click',()=>dlg.close());
   dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close();});          /* click on the backdrop */
   dlg.addEventListener('close',()=>{fr.src='about:blank';open.focus();});     /* stop playback, return focus */
 })();
-render(); renderPath(1); a11yIcons(document.body);
+render(); renderPath(0); a11yIcons(document.body);
