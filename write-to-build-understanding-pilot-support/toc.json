@@ -1,0 +1,20 @@
+{
+  "id": "X332947",
+  "bookTitle": "Write to Build Understanding Pilot Support",
+  "launchPage": "index.html",
+  "spreads": {
+    "0": [
+      "X332947index"
+    ]
+  },
+  "pages": [
+    {
+      "id": "X332947index",
+      "title": "Write to Build Understanding Pilot Support",
+      "html": {
+        "id": "X332947_html",
+        "cont": "index.html"
+      }
+    }
+  ]
+}

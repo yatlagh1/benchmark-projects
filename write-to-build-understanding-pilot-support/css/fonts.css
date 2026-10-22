@@ -1,0 +1,42 @@
+@font-face {
+  font-family: 'VAGRoundedforBEC';
+  src: url('../fonts/VAGRoundedforBEC.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'VAGRoundedforBEC';
+  src: url('../fonts/VAGRoundedforBEC-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'VAGRoundedforBEC';
+  src: url('../fonts/VAGRoundedforBEC-SmBd.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'VAGRoundedforBEC';
+  src: url('../fonts/VAGRoundedforBEC-Italic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'VAGRoundedforBEC';
+  src: url('../fonts/VAGRoundedforBEC-BoldItalic.otf') format('opentype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'VAGRoundedforBEC';
+  src: url('../fonts/VAGRoundedforBEC-SmBdItalic.otf') format('opentype');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
