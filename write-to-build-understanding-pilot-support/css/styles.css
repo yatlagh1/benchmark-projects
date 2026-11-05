@@ -198,6 +198,15 @@ button:focus-visible {
   max-width: 100%;
   scroll-margin-top: calc(var(--header-height) + 24px);
 }
+/* Image only, no card frame */
+.ps-hero-guide-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: box-shadow 0.15s ease;
+}
+.ps-hero-guide-link:hover .ps-hero-guide-img,
+.ps-hero-guide-link:focus-visible .ps-hero-guide-img { box-shadow: var(--shadow-delicate); }
 
 .ps-hero-media {
   flex: 0 1 705px;
@@ -282,8 +291,6 @@ button:focus-visible {
   object-fit: contain;
 }
 .resource-thumb--portrait img { height: 100%; }
-/* Plain white page (no artwork edge): give it a page outline */
-.resource-thumb--page img { box-shadow: 0 0 0 1px var(--trs-neutrals-table-border), var(--shadow-delicate); }
 .resource-label {
   font-size: 24px;
   line-height: 30px;
