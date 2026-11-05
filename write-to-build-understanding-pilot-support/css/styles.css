@@ -194,19 +194,25 @@ button:focus-visible {
 
 /* Pilot Support Materials Guide thumb — same card as the materials below */
 .ps-hero-guide {
-  width: 308px;
+  width: 272px;
   max-width: 100%;
   scroll-margin-top: calc(var(--header-height) + 24px);
 }
-/* Image only, no card frame (white margin cropped off the source image) */
+/* Guide page thumb: card border hugs the page, no side space */
 .ps-hero-guide-img {
   display: block;
   width: 100%;
   height: auto;
-  transition: box-shadow 0.15s ease;
+  border: 1px solid var(--trs-neutrals-gray-4);
+  border-radius: 8px;
+  background: #fff;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 .ps-hero-guide-link:hover .ps-hero-guide-img,
-.ps-hero-guide-link:focus-visible .ps-hero-guide-img { box-shadow: var(--shadow-delicate); }
+.ps-hero-guide-link:focus-visible .ps-hero-guide-img {
+  border-color: var(--brand-benchmark);
+  box-shadow: var(--shadow-delicate);
+}
 
 .ps-hero-media {
   flex: 0 1 705px;
