@@ -192,6 +192,13 @@ button:focus-visible {
 .page-desc-wrap p:last-child { margin-bottom: 0; }
 
 
+/* Pilot Support Materials Guide thumb — same card as the materials below */
+.ps-hero-guide {
+  width: 308px;
+  max-width: 100%;
+  scroll-margin-top: calc(var(--header-height) + 24px);
+}
+
 .ps-hero-media {
   flex: 0 1 705px;
   min-width: 0;
