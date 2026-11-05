@@ -198,21 +198,15 @@ button:focus-visible {
   max-width: 100%;
   scroll-margin-top: calc(var(--header-height) + 24px);
 }
-/* Card frame like the material thumbs, image filling it edge to edge */
+/* Image only, no card frame (white margin cropped off the source image) */
 .ps-hero-guide-img {
   display: block;
   width: 100%;
   height: auto;
-  border: 1px solid var(--trs-neutrals-gray-4);
-  border-radius: 8px;
-  background: #fff;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  transition: box-shadow 0.15s ease;
 }
 .ps-hero-guide-link:hover .ps-hero-guide-img,
-.ps-hero-guide-link:focus-visible .ps-hero-guide-img {
-  border-color: var(--brand-benchmark);
-  box-shadow: var(--shadow-delicate);
-}
+.ps-hero-guide-link:focus-visible .ps-hero-guide-img { box-shadow: var(--shadow-delicate); }
 
 .ps-hero-media {
   flex: 0 1 705px;
