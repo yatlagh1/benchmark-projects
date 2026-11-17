@@ -560,3 +560,20 @@ button{ font-family:var(--font); touch-action:manipulation; -webkit-tap-highligh
 @media (prefers-reduced-motion:reduce) and (max-width:639px){
   .node,.node:hover,.node.is-sel,.node.is-sel:hover{ transform:none; }
 }
+
+/* ---------- Assessment Story content (2026-11-17) ----------
+   circle prefix ("Program Assessment"), who a stage is for, and the process:
+   theme → sub-titles → actions */
+.node__pre{ display:block; margin-bottom:2px; font-size:.74em; font-weight:600; letter-spacing:.01em; opacity:.78; }
+.d-for{ margin:10px 0 0; font-size:14px; line-height:1.4; font-weight:700; color:var(--gl-body); }
+.pgrp .d-for{ margin:4px 0 0; }
+.proc{ list-style:none; margin:12px 0 0; padding:0; counter-reset:proc; }
+.proc > li{ position:relative; padding:12px 0 12px 38px; border-top:1px solid var(--gl-line, #E0E3EB); counter-increment:proc; }
+.proc > li:first-child{ border-top:0; padding-top:4px; }
+.proc > li::before{ content:counter(proc); position:absolute; left:0; top:10px; width:26px; height:26px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center; font-size:12.5px; font-weight:700; color:#fff; background:var(--nc, #00539B); }
+.proc > li:first-child::before{ top:2px; }
+.proc__t{ margin:0; font-size:15.5px; line-height:1.4; font-weight:700; color:var(--gl-ink); }
+.proc__do{ margin:6px 0 0; padding:0 0 0 18px; list-style:disc; }
+.proc__do li{ margin:4px 0 0; font-size:14.5px; line-height:1.5; color:var(--gl-body); }
+.proc__do li::marker{ color:var(--nc, #00539B); }
