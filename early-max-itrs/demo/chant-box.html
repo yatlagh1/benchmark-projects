@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chant Box: Print vs HTML</title>
+<link rel="stylesheet" href="../earlymax/css/bootstrap-5-3-3.css">
+<link rel="stylesheet" href="../earlymax/css/fonts.css">
+<link rel="stylesheet" href="../earlymax/css/styles.css">
+<style>
+  /* Demo layout only; the chant box itself comes from styles.css (.chant-box) */
+  /* no side nav on this page, so drop the template's 240px nav space */
+  body {
+    padding-left: 0 !important;
+  }
+
+  .compare {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 40px;
+    max-width: 1300px;
+    margin: 40px auto;
+    padding: 0 16px;
+  }
+
+  .compare h2 {
+    margin: 0 0 16px;
+    font-size: 18px;
+    line-height: 24px;
+    color: #282828;
+  }
+
+  .compare .print-shot {
+    display: block;
+    width: 100%;
+    max-width: 625px;
+    border: 1px solid #dee2e6;
+  }
+
+  .css-note {
+    max-width: 1300px;
+    margin: 0 auto 60px;
+    padding: 0 16px;
+    font-size: 14px;
+    color: #4f546e;
+  }
+
+  .css-note code {
+    color: #d2377d;
+  }
+
+  @media (max-width: 900px) {
+    .compare {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="compare strand-earlymax em-end-the-day">
+  <section>
+    <h2>Print (Y77274_TRS_PreK_U4_W2_D3_L8, page 2)</h2>
+    <img class="print-shot" src="print_chant_box.png" alt="Print version of the I’m a Firefighter chant box">
+  </section>
+  <section class="lesson-content">
+    <h2>HTML (<code>.chant-box</code> in styles.css)</h2>
+    <div class="chant-box">
+      <p class="chant-title">I’m a Firefighter</p>
+      <p class="chant-line">I’m a firefighter, my name is _____.</p>
+      <p class="chant-line">I put my boots and helmet on.</p>
+      <p class="chant-line">I hurry to the fire and give a shout.</p>
+      <p class="chant-line">With a burst of water,</p>
+      <p class="chant-line">The fire is out.</p>
+    </div>
+  </section>
+</div>
+<p class="css-note">The outline uses the page color (<code>--strand-rgb</code>), so it is pink on End the Day and follows the page color on other pages. Markup: <code>&lt;div class="chant-box"&gt;</code> with <code>&lt;p class="chant-title"&gt;</code> and one <code>&lt;p class="chant-line"&gt;</code> per line.</p>
+</body>
+</html>

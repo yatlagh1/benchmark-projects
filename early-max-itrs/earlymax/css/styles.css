@@ -3074,5 +3074,36 @@ h2 .aa-head {
 .strand-earlymax .lesson-rail .pd {
   margin-top: 4px;
 }
+/* Chant / song box: two-tone dashed outline in the page color (print: End the Day "I'm a Firefighter") */
+.chant-box {
+  --chant-dash: rgb(var(--strand-rgb));
+  --chant-gap: rgba(var(--strand-rgb), 0.4);
+  min-height: 228px;
+  margin: 20px 0 30px;
+  padding: 27px 31px;
+  background:
+    repeating-linear-gradient(90deg, var(--chant-dash) 0 20px, var(--chant-gap) 20px 30px) top / 100% 5px no-repeat,
+    repeating-linear-gradient(90deg, var(--chant-dash) 0 20px, var(--chant-gap) 20px 30px) bottom / 100% 5px no-repeat,
+    repeating-linear-gradient(180deg, var(--chant-dash) 0 20px, var(--chant-gap) 20px 30px) left / 5px 100% no-repeat,
+    repeating-linear-gradient(180deg, var(--chant-dash) 0 20px, var(--chant-gap) 20px 30px) right / 5px 100% no-repeat,
+    #fff;
+}
+
+.strand-earlymax .lesson-content .chant-box .chant-title {
+  margin: 0 0 8px;
+  text-align: center;
+  font-family: 'Edu SA Beginner', cursive;
+  font-size: 20px;
+  line-height: 26px;
+  font-weight: 500;
+  color: #5a5a5a;
+}
+
+.strand-earlymax .lesson-content .chant-box .chant-line {
+  margin: 0;
+  font-style: italic;
+  line-height: 30px;
+  color: #00539b;
+}
 /* ===== Yassine added: Early MAX styles END ===== */
 
