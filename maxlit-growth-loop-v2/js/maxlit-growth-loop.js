@@ -4,8 +4,9 @@
    Content (2026-11-17): "MaxLiteracy MTSS & Assessment Story.xlsx".
    Sheet "Updated MTSS Flow": column A = the circles, B = who the stage is for,
    C = theme, D = sub-titles in the panel, E = the actions under each sub-title.
-   Sheet "ML TODAY - iTRS": the 44 screenshot steps (role, action, screen),
-   grouped under the six circles. Text is verbatim apart from typo fixes
+   Sheet "ML TODAY - iTRS": the 44 screenshot steps (role, action, screen).
+   2026-11-18: 06 Growth Screeners merged into 01, renamed "Universal
+   Screening and Growth Assessment"; five circles. Text is verbatim apart from typo fixes
    (lightbulb, Instruction, Administer, student's, your).
 
    Earlier notes, kept for history:
@@ -39,17 +40,15 @@ const VIDEO_ID = 'v34esu6nbl';           /* placeholder: the MAXLiteracy hero vi
 const CONTENT = {
   intro: 'A shared journey showing how teachers and students move through assessment, instruction, intervention, and progress monitoring.',
   stages: [
-    {"n": "01", "key": "screening", "name": "Universal Screener", "tier": 1, "c": "#00539B", "t": "#FFFFFF", "icon": "fa-magnifying-glass-chart", "students": "All Students", "groups": [{"theme": "Identify At-Risk Students to Ensure Growth", "students": "All Students", "items": [{"t": "Administer Screeners to All Students", "do": ["Administer Grade-Level Screening and Growth Assessments"]}, {"t": "Score and Examine Item-Level Data in Grade View", "do": ["For necessary subtests, score recordings in Grade View", "Review item level data in Grade View as necessary to see individual student responses to each item for error analysis"]}, {"t": "Review Screening Results in Reports", "do": ["Access the Assess 360 Test Score Comparison Report", "Use composite scores to identify at-risk students", "Review Decoding Threshold column to identify students needing foundational skills support in Grades 2-5"]}, {"t": "Create a Reading Profile for Each Student", "do": ["Review subtest scores and interpret each student’s “Reading Profile”"]}, {"t": "Review Data & Recommendations", "do": ["Click the lightbulb to access instructional recommendations including a list of skills in need of support and instructional resources", "Determine potential skill areas for emphasis and small-groupings"]}, {"t": "RAN Task for At-Risk Students", "do": ["For K-2 Students, administer RAN Tasks to students at high-risk or some-risk for reading difficulties (based on composite score) to identify additional potential causes for reading difficulties", "Access Test Score Comparison Report for RAN results"]}, {"t": "Decision Making on Tiered Support", "do": ["Make decisions on students needing Tier 2 or Tier 3 support and move on to gathering Diagnostic Assessment data"]}]}], "steps": [{"r": "Teacher", "t": "Sign in to BU", "a": "Sign in page"}, {"r": "Teacher", "t": "Choose your program", "a": "Dashboard"}, {"r": "Teacher", "t": "Filter for Screening & Diagnostic", "a": "Library"}, {"r": "Teacher", "t": "Preview assessment / select subtest", "a": "Preview"}, {"r": "Teacher", "t": "Drag and drop assessment to Add Assignments", "a": "Library"}, {"r": "Teacher", "t": "Add assignment details and save", "a": "Library"}, {"r": "Student", "t": "Sign in to BU", "a": "Sign in page"}, {"r": "Student", "t": "Open the assignment", "a": "Dashboard"}, {"r": "Student", "t": "Take test", "a": "Test Taker"}, {"r": "Teacher", "t": "Select Assignments from menu", "a": "Library"}, {"r": "Teacher", "t": "Select assignment and Grade View", "a": "Assignments"}, {"r": "Teacher", "t": "View automated speech recognition scores", "a": "Grading"}, {"r": "Teacher", "t": "Grade additional student work, if applicable", "a": "Grading"}, {"r": "Teacher", "t": "Select Reports from menu", "a": "Grading"}, {"r": "Teacher", "t": "View Test Score Comparison report", "a": "Reports"}, {"r": "Teacher", "t": "View instructional recommendations", "a": "Reports"}]},
+    {"n": "01", "key": "screening", "name": "Universal Screening and Growth Assessment", "tier": 1, "c": "#00539B", "t": "#FFFFFF", "icon": "fa-magnifying-glass-chart", "students": "All Students", "groups": [{"theme": "Identify At-Risk Students to Ensure Growth", "students": "All Students", "items": [{"t": "Administer Screeners to All Students", "do": ["Administer Grade-Level Screening and Growth Assessments"]}, {"t": "Score and Examine Item-Level Data in Grade View", "do": ["For necessary subtests, score recordings in Grade View", "Review item level data in Grade View as necessary to see individual student responses to each item for error analysis"]}, {"t": "Review Screening Results in Reports", "do": ["Access the Assess 360 Test Score Comparison Report", "Use composite scores to identify at-risk students", "Review Decoding Threshold column to identify students needing foundational skills support in Grades 2-5"]}, {"t": "Create a Reading Profile for Each Student", "do": ["Review subtest scores and interpret each student’s “Reading Profile”"]}, {"t": "Review Data & Recommendations", "do": ["Click the lightbulb to access instructional recommendations including a list of skills in need of support and instructional resources", "Determine potential skill areas for emphasis and small-groupings"]}, {"t": "RAN Task for At-Risk Students", "do": ["For K-2 Students, administer RAN Tasks to students at high-risk or some-risk for reading difficulties (based on composite score) to identify additional potential causes for reading difficulties", "Access Test Score Comparison Report for RAN results"]}, {"t": "Decision Making on Tiered Support", "do": ["Make decisions on students needing Tier 2 or Tier 3 support and move on to gathering Diagnostic Assessment data"]}]}, {"theme": "Track Growth to End-of-Year Expectations, At-Risk Status, and Program Efficacy", "students": "All Students (Collaborative Core)", "items": [{"t": "Use Additional Screening Administrations to Track Growth Overall and for Essential Skills", "do": ["Administer the Winter and Spring Assess 360 Screening and Growth Assessments", "Access the Test Score Overview to check growth to end-of-year expectations over time"]}]}], "steps": [{"r": "Teacher", "t": "Sign in to BU", "a": "Sign in page", "g": 1}, {"r": "Teacher", "t": "Choose your program", "a": "Dashboard", "g": 2}, {"r": "Teacher", "t": "Filter for Screening & Diagnostic", "a": "Library", "g": 3}, {"r": "Teacher", "t": "Preview assessment / select subtest", "a": "Preview", "g": 4}, {"r": "Teacher", "t": "Drag and drop assessment to Add Assignments", "a": "Library", "g": 5}, {"r": "Teacher", "t": "Add assignment details and save", "a": "Library", "g": 6}, {"r": "Student", "t": "Sign in to BU", "a": "Sign in page", "g": 7}, {"r": "Student", "t": "Open the assignment", "a": "Dashboard", "g": 8}, {"r": "Student", "t": "Take test", "a": "Test Taker", "g": 9}, {"r": "Teacher", "t": "Select Assignments from menu", "a": "Library", "g": 10}, {"r": "Teacher", "t": "Select assignment and Grade View", "a": "Assignments", "g": 11}, {"r": "Teacher", "t": "View automated speech recognition scores", "a": "Grading", "g": 12}, {"r": "Teacher", "t": "Grade additional student work, if applicable", "a": "Grading", "g": 13}, {"r": "Teacher", "t": "Select Reports from menu", "a": "Grading", "g": 14}, {"r": "Teacher", "t": "View Test Score Comparison report", "a": "Reports", "g": 15}, {"r": "Teacher", "t": "View instructional recommendations", "a": "Reports", "g": 16}, {"r": "Teacher", "t": "Give A360 Screening / Growth Assessment", "a": "Library", "g": 43}, {"r": "Teacher", "t": "Check A360 Test Score Overview for growth", "a": "Reports", "g": 44}]},
 
-    {"n": "02", "key": "diagnostic", "name": "Diagnostic Assessment", "tier": 23, "c": "#00539B", "t": "#FFFFFF", "icon": "fa-stethoscope", "students": "Students Receiving Tier 2 & Tier 3 Support", "groups": [{"theme": "Determine the Starting Point for Tiered Support", "students": "Students Receiving Tier 2 & Tier 3 Support", "items": [{"t": "Administer Diagnostic Assessments", "do": ["Select Diagnostic assessment to administer based on Assess 360 data (review guide for specific guidance)", "For each completed subtest, if the student scores at or above 80%, administer the next subtest. If below 80% stop"]}, {"t": "Review Diagnostic Data & Recommendations", "do": ["Access Test Score Comparison report and recommendations to view placement for Tier 2 or Tier 3 starting points for instruction", "Click the lightbulb to access recommendations for quick connections to the Support and Acceleration Lesson Bank to access instructional materials"]}]}, {"theme": "Finalize Tiered Support Systems", "students": "Students Receiving Tier 2 & Tier 3 Support", "items": [{"t": "Begin Implementation of Tier 2 and Tier 3 Support and Progress Monitoring", "do": ["Educators make final decisions on the level, frequency, and setting for each student receiving Tier 2 or Tier 3 support. Create a progress monitoring schedule."]}]}], "steps": [{"r": "Teacher", "t": "Assign Diagnostic Phonics Assessment", "a": "Library"}, {"r": "Teacher", "t": "Administer the first subtest", "a": "Grade View"}, {"r": "Teacher", "t": "View diagnostic Test Score Comparison", "a": "Reports"}, {"r": "Teacher", "t": "View placement recommendation", "a": "Reports / Recs"}]},
+    {"n": "02", "key": "diagnostic", "name": "Diagnostic Assessment", "tier": 23, "c": "#00539B", "t": "#FFFFFF", "icon": "fa-stethoscope", "students": "Students Receiving Tier 2 & Tier 3 Support", "groups": [{"theme": "Determine the Starting Point for Tiered Support", "students": "Students Receiving Tier 2 & Tier 3 Support", "items": [{"t": "Administer Diagnostic Assessments", "do": ["Select Diagnostic assessment to administer based on Assess 360 data (review guide for specific guidance)", "For each completed subtest, if the student scores at or above 80%, administer the next subtest. If below 80% stop"]}, {"t": "Review Diagnostic Data & Recommendations", "do": ["Access Test Score Comparison report and recommendations to view placement for Tier 2 or Tier 3 starting points for instruction", "Click the lightbulb to access recommendations for quick connections to the Support and Acceleration Lesson Bank to access instructional materials"]}]}, {"theme": "Finalize Tiered Support Systems", "students": "Students Receiving Tier 2 & Tier 3 Support", "items": [{"t": "Begin Implementation of Tier 2 and Tier 3 Support and Progress Monitoring", "do": ["Educators make final decisions on the level, frequency, and setting for each student receiving Tier 2 or Tier 3 support. Create a progress monitoring schedule."]}]}], "steps": [{"r": "Teacher", "t": "Assign Diagnostic Phonics Assessment", "a": "Library", "g": 17}, {"r": "Teacher", "t": "Administer the first subtest", "a": "Grade View", "g": 18}, {"r": "Teacher", "t": "View diagnostic Test Score Comparison", "a": "Reports", "g": 19}, {"r": "Teacher", "t": "View placement recommendation", "a": "Reports / Recs", "g": 20}]},
 
-    {"n": "03", "key": "formative", "name": "Program Assessment: Embedded Formative", "tier": 1, "c": "#00539B", "t": "#FFFFFF", "icon": "fa-chalkboard-user", "students": "All Students (Collaborative Core)", "groups": [{"theme": "Embedded Formative Assessment to Identify Performance and Adjust", "students": "All Students (Collaborative Core)", "items": [{"t": "Check Skill Performance and Immediately Adjust Instruction", "do": ["Administer formative program assessments to track performance on skills and standards taught during Collaborative Core instruction and make quick adjustments to support all students"]}, {"t": "Use Data to Reteach, Reassess, and provide additional independent practice", "do": ["Use formative data on Skills Mastery Report, Test Score Comparison Report, and Single Test Analysis Report to determine reteaching and support needs across students (including leveraging recommendations).", "Instructional teams meet and review data in Professional Learning Communities using a structured data protocol (can also apply to small-group and unit-level summative data cycles)"]}]}, {"theme": "WINN With Small Group Instruction", "students": "All Students (Collaborative Core)", "items": [{"t": "Use Small-Group to Address Student Needs and Provide Tiered Support", "do": ["View recommended skills and resources in the Skills Mastery and Test Score Comparison Reports", "Leverage WINN Small-Group time and relevant resources (Support and Acceleration Bank Lessons and Activities, Mastery Check Assessments, Decodables, Digital Practice Activities) to create a support plan for students.", "Create small groups and schedule for the week", "Provide Small-Group Instruction in Rotations", "Assess skills using Quick Checks and Mastery Checks as needed."]}]}], "steps": [{"r": "Teacher", "t": "Go to Library from menu", "a": "Reports"}, {"r": "Teacher", "t": "Open your unit's Teacher Edition", "a": "Library"}, {"r": "Teacher", "t": "Teach instruction", "a": "ITRS"}, {"r": "Teacher", "t": "Access and assign assessment from Library", "a": "Plan & Teach"}, {"r": "Teacher", "t": "Administer Cumulative Spelling Assessment", "a": "Library"}, {"r": "Student", "t": "Complete a Phonics, Spelling, or Vocabulary game", "a": "Test Taker"}, {"r": "Teacher", "t": "View Skills Mastery Report", "a": "Student / Class Profile"}, {"r": "Teacher", "t": "View Reteach, Reassess, Practice resources", "a": "Plan & Teach"}, {"r": "Teacher", "t": "Run WINN small-group time", "a": "Plan & Teach"}, {"r": "Teacher", "t": "Access a Lesson Bank reteach lesson", "a": "Plan & Teach"}, {"r": "Teacher", "t": "Administer Mastery Check", "a": "Grade View"}, {"r": "Teacher", "t": "Recheck Skills Mastery Report", "a": "Student / Class Profile"}]},
+    {"n": "03", "key": "formative", "name": "Program Assessment: Embedded Formative", "tier": 1, "c": "#00539B", "t": "#FFFFFF", "icon": "fa-chalkboard-user", "students": "All Students (Collaborative Core)", "groups": [{"theme": "Embedded Formative Assessment to Identify Performance and Adjust", "students": "All Students (Collaborative Core)", "items": [{"t": "Check Skill Performance and Immediately Adjust Instruction", "do": ["Administer formative program assessments to track performance on skills and standards taught during Collaborative Core instruction and make quick adjustments to support all students"]}, {"t": "Use Data to Reteach, Reassess, and provide additional independent practice", "do": ["Use formative data on Skills Mastery Report, Test Score Comparison Report, and Single Test Analysis Report to determine reteaching and support needs across students (including leveraging recommendations).", "Instructional teams meet and review data in Professional Learning Communities using a structured data protocol (can also apply to small-group and unit-level summative data cycles)"]}]}, {"theme": "WINN With Small Group Instruction", "students": "All Students (Collaborative Core)", "items": [{"t": "Use Small-Group to Address Student Needs and Provide Tiered Support", "do": ["View recommended skills and resources in the Skills Mastery and Test Score Comparison Reports", "Leverage WINN Small-Group time and relevant resources (Support and Acceleration Bank Lessons and Activities, Mastery Check Assessments, Decodables, Digital Practice Activities) to create a support plan for students.", "Create small groups and schedule for the week", "Provide Small-Group Instruction in Rotations", "Assess skills using Quick Checks and Mastery Checks as needed."]}]}], "steps": [{"r": "Teacher", "t": "Go to Library from menu", "a": "Reports", "g": 21}, {"r": "Teacher", "t": "Open your unit's Teacher Edition", "a": "Library", "g": 22}, {"r": "Teacher", "t": "Teach instruction", "a": "ITRS", "g": 23}, {"r": "Teacher", "t": "Access and assign assessment from Library", "a": "Plan & Teach", "g": 24}, {"r": "Teacher", "t": "Administer Cumulative Spelling Assessment", "a": "Library", "g": 25}, {"r": "Student", "t": "Complete a Phonics, Spelling, or Vocabulary game", "a": "Test Taker", "g": 26}, {"r": "Teacher", "t": "View Skills Mastery Report", "a": "Student / Class Profile", "g": 27}, {"r": "Teacher", "t": "View Reteach, Reassess, Practice resources", "a": "Plan & Teach", "g": 28}, {"r": "Teacher", "t": "Run WINN small-group time", "a": "Plan & Teach", "g": 29}, {"r": "Teacher", "t": "Access a Lesson Bank reteach lesson", "a": "Plan & Teach", "g": 30}, {"r": "Teacher", "t": "Administer Mastery Check", "a": "Grade View", "g": 31}, {"r": "Teacher", "t": "Recheck Skills Mastery Report", "a": "Student / Class Profile", "g": 32}]},
 
-    {"n": "04", "key": "summative", "name": "Program Assessment: Summative", "tier": 1, "c": "#00539B", "t": "#FFFFFF", "icon": "fa-clipboard-check", "students": "All Students (Collaborative Core)", "groups": [{"theme": "Summative Assessment: Assess Mastery Levels for Skills Covered Across the Unit", "students": "All Students (Collaborative Core)", "items": [{"t": "Assess Knowledge Building and Skill Mastery in the Context of Each Unit", "do": ["Administer end-of-unit assessments during Week 4", "Use summative data on Skills Mastery Report, Test Score Comparison Report, and Single Test Analysis Report to determine reteaching and support needs across students (including leveraging recommendations)", "Access Support and Acceleration Bank Lessons, Decodables, Digital Practice Activities", "Provide Reteaching and additional support during Flex days", "Revisit groupings and small-group planning for the next unit"]}, {"t": "Look Ahead to the Next Unit", "do": ["Administer the Unit Knowledge Preview (G3-5) to determine levels of student background knowledge on the upcoming topic"]}]}], "steps": [{"r": "Teacher", "t": "Return to your Teacher Edition for more instruction", "a": "Plan & Teach"}, {"r": "Teacher", "t": "Assign Unit Assessment", "a": "Library"}, {"r": "Student", "t": "Take Unit Assessment", "a": "Test Taker"}, {"r": "Teacher", "t": "Score Unit ORF", "a": "Grade View"}, {"r": "Teacher", "t": "View overall Test Score Comparison", "a": "Reports"}, {"r": "Teacher", "t": "View Standards Performance and recommendations", "a": "Reports"}, {"r": "Teacher", "t": "View Standards Comparison Report", "a": "Reports"}]},
+    {"n": "04", "key": "summative", "name": "Program Assessment: Summative", "tier": 1, "c": "#00539B", "t": "#FFFFFF", "icon": "fa-clipboard-check", "students": "All Students (Collaborative Core)", "groups": [{"theme": "Summative Assessment: Assess Mastery Levels for Skills Covered Across the Unit", "students": "All Students (Collaborative Core)", "items": [{"t": "Assess Knowledge Building and Skill Mastery in the Context of Each Unit", "do": ["Administer end-of-unit assessments during Week 4", "Use summative data on Skills Mastery Report, Test Score Comparison Report, and Single Test Analysis Report to determine reteaching and support needs across students (including leveraging recommendations)", "Access Support and Acceleration Bank Lessons, Decodables, Digital Practice Activities", "Provide Reteaching and additional support during Flex days", "Revisit groupings and small-group planning for the next unit"]}, {"t": "Look Ahead to the Next Unit", "do": ["Administer the Unit Knowledge Preview (G3-5) to determine levels of student background knowledge on the upcoming topic"]}]}], "steps": [{"r": "Teacher", "t": "Return to your Teacher Edition for more instruction", "a": "Plan & Teach", "g": 33}, {"r": "Teacher", "t": "Assign Unit Assessment", "a": "Library", "g": 34}, {"r": "Student", "t": "Take Unit Assessment", "a": "Test Taker", "g": 35}, {"r": "Teacher", "t": "Score Unit ORF", "a": "Grade View", "g": 36}, {"r": "Teacher", "t": "View overall Test Score Comparison", "a": "Reports", "g": 37}, {"r": "Teacher", "t": "View Standards Performance and recommendations", "a": "Reports", "g": 38}, {"r": "Teacher", "t": "View Standards Comparison Report", "a": "Reports", "g": 39}]},
 
-    {"n": "05", "key": "monitoring", "name": "Progress Monitoring Assessment", "tier": 23, "c": "#00539B", "t": "#FFFFFF", "icon": "fa-chart-line", "students": "Students Receiving Tier 2 & Tier 3 Support", "groups": [{"theme": "Track Progress Over Time to Ensure Tiered Support Leads to Meaningful Growth", "students": "Students Receiving Tier 2 & Tier 3 Support", "items": [{"t": "Track Response-to-Intervention and Adjust As Necessary", "do": ["Administer specific progress monitoring types based on Diagnostic Assessment data", "Review the Test Score Comparison Report with trend line to identify if student performance is tracking to the end of year benchmark", "If data points track or are above the trend line, continue with implementation of tiered instructional support", "If multiple data points are below the trend line, revisit the support plan for the individual student - is an increase in time or setting warranted? Would another change unlock growth?"]}]}], "steps": [{"r": "Teacher", "t": "Assign Progress Monitoring Assessment", "a": "Library"}, {"r": "Teacher", "t": "Administer Nonsense Word Fluency", "a": "Grade View"}, {"r": "Teacher", "t": "Check Test Score Overview trend line", "a": "Reports"}]},
-
-    {"n": "06", "key": "growth", "name": "Growth Screeners", "tier": 1, "c": "#00539B", "t": "#FFFFFF", "icon": "fa-arrow-trend-up", "students": "All Students (Collaborative Core)", "groups": [{"theme": "Track Growth to End-of-Year Expectations, At-Risk Status, and Program Efficacy", "students": "All Students (Collaborative Core)", "items": [{"t": "Use Additional Screening Administrations to Track Growth Overall and for Essential Skills", "do": ["Administer the Winter and Spring Assess 360 Screening and Growth Assessments", "Access the Test Score Overview to check growth to end-of-year expectations over time"]}]}], "steps": [{"r": "Teacher", "t": "Give A360 Screening / Growth Assessment", "a": "Library"}, {"r": "Teacher", "t": "Check A360 Test Score Overview for growth", "a": "Reports"}]}
+    {"n": "05", "key": "monitoring", "name": "Progress Monitoring Assessment", "tier": 23, "c": "#00539B", "t": "#FFFFFF", "icon": "fa-chart-line", "students": "Students Receiving Tier 2 & Tier 3 Support", "groups": [{"theme": "Track Progress Over Time to Ensure Tiered Support Leads to Meaningful Growth", "students": "Students Receiving Tier 2 & Tier 3 Support", "items": [{"t": "Track Response-to-Intervention and Adjust As Necessary", "do": ["Administer specific progress monitoring types based on Diagnostic Assessment data", "Review the Test Score Comparison Report with trend line to identify if student performance is tracking to the end of year benchmark", "If data points track or are above the trend line, continue with implementation of tiered instructional support", "If multiple data points are below the trend line, revisit the support plan for the individual student - is an increase in time or setting warranted? Would another change unlock growth?"]}]}], "steps": [{"r": "Teacher", "t": "Assign Progress Monitoring Assessment", "a": "Library", "g": 40}, {"r": "Teacher", "t": "Administer Nonsense Word Fluency", "a": "Grade View", "g": 41}, {"r": "Teacher", "t": "Check Test Score Overview trend line", "a": "Reports", "g": 42}]}
   ]
 };
 
@@ -88,9 +87,10 @@ let tier = 1;
 const PHONE = '(max-width:639px)';
 const isPhone = () => matchMedia(PHONE).matches;
 const isWide  = () => matchMedia('(min-width:1240px)').matches;   /* ring and panel side by side */
-/* Ring layouts open on stage 01 so the panel is never empty; phones start
-   with every stage closed. */
-let sel = isPhone() ? null : FIRST;
+/* Nothing is open on launch: the ring sits centred in the card and the
+   panel slides in beside it (pushing the ring to its place) on the first
+   click. Phones start as a closed list. */
+let sel = null;
 
 const ring    = document.getElementById('ring');
 const detail  = document.getElementById('detail');
@@ -283,8 +283,12 @@ const TOTAL = S.reduce((n, s) => n + (s.steps || []).length, 0);
 
 /* full-size screenshots: assets/steps/step-NN.jpg (1600px wide); 240px
    thumbnails of the same files: assets/steps/thumbs/step-NN.jpg */
-const shotSrc  = g => 'assets/steps/step-' + pad2(g) + '.jpg';
-const thumbSrc = g => 'assets/steps/thumbs/step-' + pad2(g) + '.jpg';
+/* g here is the step's place in the flow; each step carries its own
+   screenshot number (st.g), so steps can move between stages (06 Growth was
+   merged into 01) without picking up another step's picture */
+const figNo    = g => { const at = stepAt(g); return at && at.st.g ? at.st.g : g; };
+const shotSrc  = g => 'assets/steps/step-' + pad2(figNo(g)) + '.jpg';
+const thumbSrc = g => 'assets/steps/thumbs/step-' + pad2(figNo(g)) + '.jpg';
 /* A step shows its real screenshot when step-NN.jpg exists and the
    placeholder below when it does not, so screenshots can be added one at a
    time. */
@@ -319,15 +323,23 @@ function stepsBlock(s) {
          '<div class="steps">' + out + '</div></div>';
 }
 
-/* the process (sheet columns C-E): each theme, its sub-titles, and the
-   actions under each sub-title */
+/* who a stage (or one of its themes) is for: a people icon, a quiet "For",
+   then the audience */
+const forLine = t => '<p class="d-for"><i class="fa-solid fa-user-group d-for__ic" aria-hidden="true"></i>' +
+  '<span><span class="d-for__l">For</span> ' + esc(t) + '</span></p>';
+
+/* the process (sheet columns C-E): one card per theme, holding its
+   sub-titles and the actions under each */
 function processBlock(s) {
+  let k = 0;
   return (s.groups || []).map(g =>
     '<div class="d-sec pgrp">' +
       '<h3 class="d-h3">' + nw(esc(g.theme)) + '</h3>' +
-      (g.students && g.students !== s.students ? '<p class="d-for">' + esc(g.students) + '</p>' : '') +
+      (g.students && g.students !== s.students ? forLine(g.students) : '') +
       '<ol class="proc">' + g.items.map(it =>
-        '<li><p class="proc__t">' + nw(esc(it.t)) + '</p>' +
+        '<li><button type="button" class="proc__t proc__btn" data-k="' + (k++) + '" aria-haspopup="dialog">' +
+          '<span>' + nw(esc(it.t)) + '</span><i class="fa-regular fa-image proc__ic" aria-hidden="true"></i>' +
+          '<span class="sr-only">, view image</span></button>' +
         (it.do.length ? '<ul class="proc__do">' + it.do.map(x => '<li>' + nw(esc(x)) + '</li>').join('') + '</ul>' : '') +
         '</li>').join('') + '</ol></div>').join('');
 }
@@ -386,9 +398,17 @@ function scrollState() {
   detail.classList.toggle('is-scrolled', over && sc.scrollTop > 4);
 }
 
+/* side by side, the closed state keeps the panel in the grid (invisible) so
+   it can slide in; the ring is shifted by half the panel + gap to sit centred */
+function centreShift() {
+  if (!isWide()) { loopEl.style.removeProperty('--gl-shift'); return; }
+  const gap = parseFloat(getComputedStyle(loopEl).columnGap) || 0;
+  loopEl.style.setProperty('--gl-shift', Math.round((detail.getBoundingClientRect().width + gap) / 2) + 'px');
+}
 function renderDetail(animate) {
-  detail.hidden = !sel;                   /* phone, nothing open yet */
-  if (!sel) { detail.innerHTML = ''; return; }
+  loopEl.classList.toggle('is-closed', !sel);
+  detail.hidden = !sel && !isWide();      /* stacked / phone: no empty box */
+  if (!sel) { detail.innerHTML = ''; detail.style.removeProperty('--gl-panel-h'); centreShift(); return; }
   const s = byKey(sel), i = idx(sel);
   const prev = neighbour(i, -1), nx = neighbour(i, 1);
   const name = esc(s.name);
@@ -407,12 +427,14 @@ function renderDetail(animate) {
       '<div class="d-title"><span class="d-badge" aria-hidden="true"><i class="' + icon(s) + '"></i></span>' +
         '<h2 class="d-name" id="dName" tabindex="-1">' + nw2(name) + '</h2></div>' +
     '</div>' +
-    (s.students ? '<p class="d-for">For: ' + esc(s.students) + '</p>' : '') +
+    (s.students ? forLine(s.students) : '') +
+    /* stage video link: commented out until the real stage videos are supplied
     '<button type="button" class="d-video" id="vidOpen" aria-haspopup="dialog">' +
       '<span class="d-video__p" aria-hidden="true"><i class="fa-solid fa-play"></i></span>' +
       '<span>' + nw('Watch the ' + name + ' video') + '</span></button>' +
+    */
     processBlock(s) + stepsBlock(s) + '</div>' + pagerBlock(prev, nx);
-  document.getElementById('vidOpen').addEventListener('click', openVideo);
+  /* document.getElementById('vidOpen').addEventListener('click', openVideo);   (video link commented out) */
   placeDetail();
   const sc = detail.querySelector('.d-scroll');
   sizePanel();
@@ -745,6 +767,33 @@ shotDlg.addEventListener('close', () => {
   }
 });
 
+/* ---------- sub-title image viewer ----------
+   Each sub-title (sheet column D) opens its picture. Until the pictures are
+   supplied every one shows the placeholder; give an item img:'path.jpg' in
+   CONTENT to use a real one. */
+const pDlg = document.getElementById('pshot'), pFig = document.getElementById('pshotFig');
+let pItems = [], pK = 0, pReturn = null;
+const itemsOf = s => (s.groups || []).flatMap(g => g.items.map(it => ({ it, theme: g.theme })));
+function openProc(k, from) {
+  const s = byKey(sel); if (!s) return;
+  pItems = itemsOf(s); if (!pItems[k]) return;
+  pK = k; if (from) pReturn = from;
+  const { it, theme } = pItems[k];
+  document.getElementById('pshotMeta').textContent = 'Stage ' + s.n + ' · ' + theme;
+  document.getElementById('pshotTitle').textContent = it.t;
+  pFig.innerHTML = it.img
+    ? '<img src="' + esc(it.img) + '" alt="' + esc(it.t) + '">'
+    : '<div class="shot__ph" role="img" aria-label="Placeholder image for ' + esc(it.t) + '">' + PLACEHOLDER + '</div>';
+  if (!pDlg.open) pDlg.showModal();
+}
+detail.addEventListener('click', e => { const b = e.target.closest('.proc__btn'); if (b) openProc(+b.dataset.k, b); });
+document.getElementById('pshotClose').addEventListener('click', () => pDlg.close());
+pDlg.addEventListener('click', e => { if (e.target === pDlg) pDlg.close(); });
+pDlg.addEventListener('close', () => {
+  const b = detail.querySelector('.proc__btn[data-k="' + pK + '"]') || pReturn;
+  if (b && document.contains(b)) b.focus({ preventScroll: true });
+});
+
 setTier(1, true);
 drawRing();
 renderDetail();
@@ -756,6 +805,6 @@ let rz;
 addEventListener('resize', () => { cancelAnimationFrame(rz); rz = requestAnimationFrame(() => {
   /* leaving the phone layout with nothing open: open stage 01 so the panel
      beside the ring has content; and keep row semantics in step */
-  if (!isPhone() && !sel) { sel = FIRST; renderDetail(false); }
-  drawRing(); layoutArcs(); placeDetail(); sizePanel(); scrollState();
+  if (!sel) renderDetail(false);
+  drawRing(); layoutArcs(); placeDetail(); sizePanel(); scrollState(); centreShift();
 }); });

@@ -57,10 +57,13 @@ button{ font-family:var(--font); touch-action:manipulation; -webkit-tap-highligh
 /* Decorative doodle motif to the right of the head - the landing page's
    .band--bird image, size and opacity (final.css). Shown whole, scaled down
    with the row, never behind the tool card. */
-.a-top{ display:grid; grid-template-columns:minmax(540px,767fr) minmax(0,480fr); column-gap:32px; align-items:start; }
-.a-motif{ width:100%; max-width:480px; aspect-ratio:982/547; justify-self:end; margin-top:-44px;
-  background:url("../assets/motif02.png") no-repeat center/contain; opacity:.085; }
-.a-h2{ font-size:44px; line-height:1.06; letter-spacing:-.01em; font-weight:600; color:var(--gl-ink); margin:0; }
+/* the motif fills the space beside the text, starting just after it (no
+   white gap); its height is capped to the text block so the card never moves */
+.a-top{ display:flex; align-items:center; gap:40px; }
+.a-head{ flex:0 1 767px; min-width:0; }
+.a-motif{ flex:1 1 0; min-width:0; height:210px; max-width:600px;
+  background:url("../assets/motif03.png") no-repeat left center/contain; opacity:.085; }
+.a-h2{ font-size:44px; line-height:1.06; letter-spacing:-.01em; font-weight:600; color:var(--gl-blue); margin:0; }
 .a-sub{ font-size:22px; line-height:1.3; letter-spacing:-.01em; font-weight:600; color:var(--gl-blue); margin:16px 0 0; }
 .a-lede{ font-size:18px; line-height:1.65; font-weight:500; color:var(--gl-body); margin:20px 0 0; }
 
@@ -155,11 +158,11 @@ button{ font-family:var(--font); touch-action:manipulation; -webkit-tap-highligh
 .node__name{ font-size:clamp(13px,2.2cqi,16px); font-weight:600; line-height:1.16; color:var(--gl-ink);
   max-width:calc(var(--node) * .78); flex:none; overflow-wrap:break-word; hyphens:auto;
   transition:color .25s var(--gl-ease); }
-/* small rings (tablets, zoom): the glyph badge gives its room to the name */
-@container (max-width:700px){
-  .node__badge{ display:none; }
-  .node__n{ margin-bottom:1px; }
-}
+/* the ring circles carry number + name only, at every size, so the ring
+   looks the same on every screen (was: icon only on rings over 700px).
+   The phone list (<640px) brings its badge back as the list's spine. */
+.node__badge{ display:none; }
+.node__n{ margin-bottom:1px; }
 .node__tier{ font-size:clamp(11.5px,1.7cqi,12.5px); font-weight:700; color:var(--gl-body); margin-top:3px;
   white-space:nowrap; transition:color .25s var(--gl-ease); }
 .node__chev{ display:none; }
@@ -231,7 +234,7 @@ button{ font-family:var(--font); touch-action:manipulation; -webkit-tap-highligh
 
 /* sections inside the panel: more air above a heading than below it */
 .d-sec{ margin-top:28px; }
-.d-h3{ margin:0; font-size:17px; line-height:1.3; letter-spacing:-.01em; font-weight:600; color:var(--gl-ink); }
+.d-h3{ margin:0; font-size:19px; line-height:1.3; letter-spacing:-.01em; font-weight:600; color:var(--gl-ink); }
 /* plain text: an instruction, not a control */
 .d-hint{ margin:2px 0 14px; font-size:14px; line-height:1.5; color:var(--gl-body); }
 
@@ -565,15 +568,68 @@ button{ font-family:var(--font); touch-action:manipulation; -webkit-tap-highligh
    circle prefix ("Program Assessment"), who a stage is for, and the process:
    theme → sub-titles → actions */
 .node__pre{ display:block; margin-bottom:2px; font-size:.74em; font-weight:600; letter-spacing:.01em; opacity:.78; }
-.d-for{ margin:10px 0 0; font-size:14px; line-height:1.4; font-weight:700; color:var(--gl-body); }
-.pgrp .d-for{ margin:4px 0 0; }
-.proc{ list-style:none; margin:12px 0 0; padding:0; counter-reset:proc; }
+/* audience: reads as the stage's subtitle - icon in the stage colour, a quiet
+   "For", the audience in ink; lined up under the stage name beside the badge */
+.d-for{ display:flex; align-items:flex-start; gap:8px; margin:8px 0 0; font-size:14.5px; line-height:1.45; font-weight:600; color:var(--gl-ink); }
+.d-for__ic{ flex:none; margin-top:3px; font-size:13px; color:var(--nc, var(--gl-blue)); }
+.d-for__l{ font-weight:500; color:var(--gl-body); }
+@media (min-width:640px){ .d-head + .d-for{ padding-left:58px; } }   /* badge 44 + gap 14 */
+/* one white card per theme: the theme heads it, its steps sit inside, so a
+   stage with two themes shows two clear groups. Flat: tonal layer, no shadow */
+.pgrp{ margin-top:20px; padding:18px 18px 6px; background:#fff; border:1px solid var(--gl-line); border-radius:12px; }
+.pgrp + .pgrp{ margin-top:14px; }
+.pgrp .d-for{ margin:6px 0 0; font-size:14px; }
+.pgrp .d-h3{ text-wrap:balance; }
+.proc{ list-style:none; margin:14px 0 0; padding:12px 0 0; border-top:1px solid var(--gl-line); counter-reset:proc; }
+@media (max-width:639px){ .pgrp{ padding:14px 14px 4px; } }
 .proc > li{ position:relative; padding:12px 0 12px 38px; border-top:1px solid var(--gl-line, #E0E3EB); counter-increment:proc; }
-.proc > li:first-child{ border-top:0; padding-top:4px; }
+.proc > li:first-child{ border-top:0; padding-top:2px; }
 .proc > li::before{ content:counter(proc); position:absolute; left:0; top:10px; width:26px; height:26px; border-radius:50%;
   display:flex; align-items:center; justify-content:center; font-size:12.5px; font-weight:700; color:#fff; background:var(--nc, #00539B); }
-.proc > li:first-child::before{ top:2px; }
+.proc > li:first-child::before{ top:0; }
 .proc__t{ margin:0; font-size:15.5px; line-height:1.4; font-weight:700; color:var(--gl-ink); }
 .proc__do{ margin:6px 0 0; padding:0 0 0 18px; list-style:disc; }
 .proc__do li{ margin:4px 0 0; font-size:14.5px; line-height:1.5; color:var(--gl-body); }
 .proc__do li::marker{ color:var(--nc, #00539B); }
+
+/* ---------- launch state (2026-11-18) ----------
+   Nothing open: the ring is centred in the card (shifted by half the panel
+   + gap, set in JS as --gl-shift) and the panel waits off to the right. The
+   first click slides the panel in and the ring glides back to its place. */
+.hub__hint{ display:none; margin:8px 0 0; font-size:13px; font-weight:700; color:var(--gl-blue); }
+.loop.is-closed .hub__hint{ display:block; }
+@media (min-width:1240px){
+  .ringwrap{ transition:transform .6s var(--gl-ease); }
+  .loop.is-closed .ringwrap{ transform:translateX(var(--gl-shift,0px)); }
+  .detail{ transition:opacity .45s ease .12s, transform .6s var(--gl-ease), visibility 0s; }
+  .loop.is-closed .detail{ opacity:0; visibility:hidden; transform:translateX(56px); pointer-events:none;
+    transition:opacity .2s ease, transform .3s var(--gl-ease), visibility 0s .3s; }
+}
+@media (prefers-reduced-motion:reduce){
+  .ringwrap,.detail,.loop.is-closed .detail{ transition:none; }
+}
+
+/* sub-titles open an image (placeholder for now) */
+.proc__btn{ display:flex; align-items:flex-start; justify-content:space-between; gap:10px; width:100%; padding:0; border:0;
+  background:none; font:inherit; font-size:15.5px; line-height:1.4; font-weight:700; color:var(--gl-ink); text-align:left; cursor:pointer; }
+.proc__ic{ flex:none; margin-top:3px; font-size:14px; color:var(--gl-blue); opacity:.7; transition:opacity .15s, transform .15s; }
+.proc__btn:hover{ color:var(--gl-blue); }
+.proc__btn:hover .proc__ic{ opacity:1; transform:scale(1.1); }
+.proc__btn:focus-visible{ outline:3px solid var(--gl-focus); outline-offset:3px; border-radius:4px; }
+.pshot__stage{ padding:20px 24px; }
+.hub__t--long{ font-size:clamp(18px,3cqi,24px); line-height:1.2; text-wrap:balance; }
+/* no footer in the sub-title viewer: image row takes the rest of the height */
+.pshot[open]{ grid-template-rows:auto minmax(0,1fr); }
+
+/* ---------- launch state: no dead white space (2026-11-18) ----------
+   Side by side with nothing open: the toggle stays at the card's left edge
+   and the key at its right (the bar stretches across while the ring sits
+   centred), easing back as the panel slides in. */
+@media (min-width:1240px){
+  .loop{ position:relative; }
+  .tool__bar{ transition:margin .6s var(--gl-ease); }
+  .loop.is-closed .tool__bar{ margin-left:calc(-1 * var(--gl-shift,0px)); margin-right:calc(-1 * var(--gl-shift,0px)); }
+}
+@media (prefers-reduced-motion:reduce){
+  .tool__bar{ transition:none; }
+}

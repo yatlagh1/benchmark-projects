@@ -21,7 +21,6 @@
     <div class="a-top">
       <div class="a-head">
         <h1 class="a-h2" id="loopTitle">From screening to measurable&nbsp;growth</h1>
-        <p class="a-sub">Lorem ipsum dolor sit amet, consectetur adipiscing&nbsp;elit</p>
         <p class="a-lede">A shared journey showing how teachers and students move through
           assessment, instruction, intervention, and progress&nbsp;monitoring.</p>
       </div>
@@ -43,11 +42,11 @@
           <div class="ring" id="ring" role="group" aria-label="The assessment cycle, stage by stage">
             <svg class="arcs" id="arcs" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"></svg>
             <!-- the loop's title, as in the meeting sketch ("TITLE / MTSS") -->
-            <div class="hub"><p class="hub__t">MTSS</p><p class="hub__s">Multi-Tiered System of&nbsp;Supports</p></div>
+            <div class="hub"><p class="hub__t hub__t--long">MaxLiteracy Assessment &amp;&nbsp;MTSS&nbsp;Story</p><p class="hub__hint">Select a stage to&nbsp;explore</p></div>
           </div>
           <!-- phone only: the list's last row closes the loop -->
           <button type="button" class="btn-ghost loopback" id="loopBack">
-            <i class="fa-solid fa-rotate-right" aria-hidden="true"></i><span>Back to 01 Universal Screener</span></button>
+            <i class="fa-solid fa-rotate-right" aria-hidden="true"></i><span>Back to 01 Universal Screening and Growth Assessment</span></button>
         </div>
         <div class="detail" id="detail"></div>
         <p class="sr-only" id="srStatus" aria-live="polite"></p>
@@ -91,6 +90,19 @@
     <ol class="shot__strip" id="shotStrip" aria-label="Steps"></ol>
   </div>
   <p class="sr-only" id="shotLive" aria-live="polite"></p>
+</dialog>
+<!-- sub-title image viewer (placeholder images until the real ones are supplied) -->
+<dialog class="vmodal shot pshot" id="pshot" aria-labelledby="pshotTitle">
+  <div class="vmodal__head">
+    <div class="shot__head">
+      <p class="shot__meta" id="pshotMeta"></p>
+      <h2 id="pshotTitle">Sub-title</h2>
+    </div>
+    <button type="button" class="vmodal__close" id="pshotClose" aria-label="Close image"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+  </div>
+  <div class="shot__stage pshot__stage">
+    <div class="shot__fig" id="pshotFig"></div>
+  </div>
 </dialog>
 <script src="js/maxlit-growth-loop.js?v=v2-1"></script>
 </body>
