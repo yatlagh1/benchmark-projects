@@ -620,6 +620,13 @@ button{ font-family:var(--font); touch-action:manipulation; -webkit-tap-highligh
 .hub__t--long{ font-size:clamp(18px,3cqi,24px); line-height:1.2; text-wrap:balance; }
 /* no footer in the sub-title viewer: image row takes the rest of the height */
 .pshot[open]{ grid-template-rows:auto minmax(0,1fr); }
+/* two screens for one step: side by side, stacked on narrow screens */
+.shot__fig--pair{ gap:16px; }
+.shot__fig--pair img{ max-width:calc(50% - 8px); }
+@media (max-width:639px){
+  .shot__fig--pair{ flex-direction:column; }
+  .shot__fig--pair img{ max-width:100%; max-height:calc(50% - 8px); }
+}
 
 /* ---------- launch state: no dead white space (2026-11-18) ----------
    Side by side with nothing open: the toggle stays at the card's left edge
