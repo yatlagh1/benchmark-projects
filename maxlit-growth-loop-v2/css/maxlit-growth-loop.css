@@ -61,16 +61,14 @@ button{ font-family:var(--font); touch-action:manipulation; -webkit-tap-highligh
    white gap); its height is capped to the text block so the card never moves */
 .a-top{ display:flex; align-items:center; gap:40px; }
 .a-head{ flex:0 1 767px; min-width:0; }
-.a-motif{ flex:1 1 0; min-width:0; height:210px; max-width:600px;
-  background:url("../assets/motif03.png") no-repeat left center/contain; opacity:.085; }
 .a-h2{ font-size:44px; line-height:1.06; letter-spacing:-.01em; font-weight:600; color:var(--gl-blue); margin:0; }
 .a-sub{ font-size:22px; line-height:1.3; letter-spacing:-.01em; font-weight:600; color:var(--gl-blue); margin:16px 0 0; }
-.a-lede{ font-size:18px; line-height:1.65; font-weight:500; color:var(--gl-body); margin:20px 0 0; }
+.a-lede{ font-size:18px; line-height:1.65; font-weight:500; color:var(--gl-body); margin:12px 0 0; }
 
 /* ---------- tool card ---------- */
 /* no overflow:hidden on .tool - it would turn the card into the scroll
    container and stop the ring from staying in view */
-.tool{ margin-top:40px; background:#fff; border:1px solid var(--gl-line);
+.tool{ margin-top:20px; background:#fff; border:1px solid var(--gl-line);
   border-radius:var(--gl-radius); box-shadow:0 4px 16px rgba(0,45,90,.06); }
 
 /* the toggle and its key: a row over the ring (controls left, key right, as
@@ -441,12 +439,8 @@ button{ font-family:var(--font); touch-action:manipulation; -webkit-tap-highligh
   .ring{ width:100%; max-width:720px; margin:0 auto; }
   .detail{ width:100%; max-width:860px; margin:0 auto; }
 }
-@media (max-width:1200px){
-  .a-motif{ opacity:.06; }
-}
 @media (max-width:860px){
   .a-top{ display:block; }
-  .a-motif{ display:none; }
   .a-band{ padding:40px 0; }
   .a-shell{ padding:0 16px; }
   .a-h2{ font-size:30px; line-height:1.12; }
